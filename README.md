@@ -40,4 +40,8 @@ I am always open to discussing research opportunities, quantitative projects, or
 * **GitHub:** [@nealyx](https://github.com/nealyx)
 
 ---
+<<<<<<< HEAD
 *Built with precision and curiosity.*
+=======
+*Built with precision and curiosity.*
+>>>>>>> 4ae3a35 (initial full website upload)

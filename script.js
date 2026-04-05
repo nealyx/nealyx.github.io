@@ -331,9 +331,6 @@ function updateMouseSmoothing() {
 function animateBackground() {
   if (!ctx) return;
 
-  /* Fill the entire canvas with the background color on every frame.
-     This replaces clearRect(transparent) and ensures no white bleed
-     shows through any section of the page. */
   ctx.fillStyle = config.bgColor;
   ctx.fillRect(0, 0, width, height);
 
@@ -512,3 +509,51 @@ document.addEventListener("keydown", (e) => {
     closeProofModal();
   }
 });
+
+/* ===== INSPIRED 3D TILT CARDS ===== */
+
+(function () {
+  const tiltTargets = document.querySelectorAll(
+    ".glass-card, .nav-wave-btn, .read-more-btn, .tac-card"
+  );
+
+  tiltTargets.forEach((card) => {
+    if (card.classList.contains("proof-card")) return;
+
+    card.classList.add("tilt-card");
+
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+
+      const maxTilt = 8;
+      const rx = (-dy / (rect.height / 2)) * maxTilt;
+      const ry = (dx / (rect.width / 2)) * maxTilt;
+
+      card.style.transform =
+        `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+
+      const px = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const py = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+
+      card.style.setProperty("--mx", px + "%");
+      card.style.setProperty("--my", py + "%");
+      card.classList.add("tilt-active");
+
+      card.style.boxShadow =
+        "0 28px 60px rgba(0,0,0,0.10), 0 0 28px rgba(212,175,55,0.16)";
+      card.style.borderColor = "rgba(212,175,55,0.30)";
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+      card.style.boxShadow = "";
+      card.style.borderColor = "";
+      card.classList.remove("tilt-active");
+    });
+  });
+})();

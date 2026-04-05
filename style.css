@@ -967,3 +967,67 @@ body.modal-open {
     max-height: 50vh;
   }
 }
+
+/* ===== INSPIRED 3D TILT SYSTEM ===== */
+
+.tilt-card {
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    filter 0.3s ease;
+}
+
+.tilt-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      rgba(212, 175, 55, 0.14) 0%,
+      rgba(244, 223, 147, 0.08) 18%,
+      transparent 65%
+    );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.tilt-card.tilt-active::after {
+  opacity: 1;
+}
+
+/* Keep proof cards excluded */
+.proof-card {
+  transform-style: flat;
+}
+
+/* Slightly smoother interaction for these specific existing elements */
+.glass-card.tilt-card,
+.nav-wave-btn.tilt-card,
+.read-more-btn.tilt-card,
+.tac-card.tilt-card {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Optional text depth */
+.tilt-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Preserve the nav button sweep */
+.nav-wave-btn.tilt-card::before {
+  z-index: 2;
+}
+
+.nav-wave-btn.tilt-card::after {
+  z-index: 1;
+}
