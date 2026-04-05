@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research - Neal Shandilya</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0c10;
+      --hud: rgba(0,255,136,1);
+      --amber: #ffb300;
+      --red: #ff3b3b;
+      --text: #e8f0e8;
+      --text-soft: #7a9e7a;
+      --mono: 'Share Tech Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    html, body { width: 100%; min-height: 100%; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    #tac-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* scanlines */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.055) 2px, rgba(0,0,0,0.055) 4px
+      );
+    }
+
+    /* HUD corners */
+    .hud-corner {
+      position: fixed;
+      z-index: 4;
+      pointer-events: none;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: rgba(0,255,136,0.5);
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+    }
+    .hud-corner.tl { top: 1.2rem; left: 1.4rem; }
+    .hud-corner.tr { top: 1.2rem; right: 1.4rem; text-align: right; }
+    .hud-corner.bl { bottom: 1.2rem; left: 1.4rem; }
+    .hud-corner.br { bottom: 1.2rem; right: 1.4rem; text-align: right; }
+
+    /* page content */
+    .page {
+      position: relative;
+      z-index: 3;
+      min-height: 100vh;
+      padding: 5rem 2rem 6rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .shell { width: min(860px, 100%); }
+
+    /* header */
+    .hud-header { margin-bottom: 3.5rem; text-align: center; }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      color: rgba(0,255,136,0.8);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      margin-bottom: 1.2rem;
+    }
+    .kicker::before, .kicker::after {
+      content: '';
+      width: 38px; height: 1px;
+      background: rgba(0,255,136,0.35);
+    }
+
+    .page-title {
+      font-family: var(--mono);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-shadow: 0 0 30px rgba(0,255,136,0.12);
+      line-height: 1;
+      margin-bottom: 0.9rem;
+    }
+
+    .page-subtitle {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: rgba(0,255,136,0.55);
+      letter-spacing: 0.12em;
+    }
+
+    /* affil card */
+    .affil-card {
+      position: relative;
+      margin-bottom: 2rem;
+      padding: 1.6rem 2rem;
+      border: 1px solid rgba(0,255,136,0.18);
+      border-left: 3px solid rgba(0,255,136,0.7);
+      background: rgba(0,12,6,0.72);
+      backdrop-filter: blur(18px);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .affil-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, rgba(0,255,136,0.5), transparent);
+    }
+
+    .affil-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: rgba(0,255,136,0.6);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .affil-title {
+      font-size: 1.22rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .affil-sub {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--amber);
+      letter-spacing: 0.05em;
+      opacity: 0.9;
+    }
+
+    .affil-corner {
+      position: absolute;
+      top: 1rem; right: 1.2rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: rgba(0,255,136,0.3);
+      letter-spacing: 0.12em;
+    }
+
+    /* status pills */
+    .status-row {
+      display: flex;
+      gap: 0.7rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.36rem 0.88rem;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .pill.green {
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.28);
+      color: rgba(0,255,136,0.9);
+    }
+    .pill.amber {
+      background: rgba(255,179,0,0.08);
+      border: 1px solid rgba(255,179,0,0.28);
+      color: var(--amber);
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      animation: blink 1.9s ease-in-out infinite;
+    }
+    .pill.green .dot { background: rgba(0,255,136,1); }
+    .pill.amber .dot { background: var(--amber); animation-delay: 0.5s; }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.15; }
+    }
+
+    /* cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .tac-card {
+      position: relative;
+      padding: 1.4rem 1.5rem;
+      border: 1px solid rgba(0,255,136,0.12);
+      background: rgba(4,14,8,0.75);
+      backdrop-filter: blur(22px);
+      border-radius: 3px;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .tac-card:hover {
+      border-color: rgba(0,255,136,0.32);
+      box-shadow: 0 0 24px rgba(0,255,136,0.06);
+    }
+    .tac-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,136,0.18), transparent);
+    }
+
+    .card-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(0,255,136,0.5);
+      margin-bottom: 0.6rem;
+    }
+
+    .tac-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+
+    .tac-card p {
+      font-size: 0.9rem;
+      line-height: 1.78;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 2.5rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: rgba(0,255,136,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: rgba(0,255,136,1); text-decoration: underline; }
+
+    @media (max-width: 680px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .page { padding: 3.5rem 1.2rem 4rem; }
+      .hud-corner.bl, .hud-corner.br { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="tac-canvas"></canvas>
+
+<div class="hud-corner tl">
+  JHU APL // AMDS<br>
+  ASPIRE INTERN<br>
+  <span id="hud-time">--:--:--Z</span>
+</div>
+<div class="hud-corner tr">
+  SYS: NOMINAL<br>
+  TRACK MODE: ACTIVE<br>
+  THREATS: <span id="threat-count">00</span>
+</div>
+<div class="hud-corner bl">
+  CURSOR: <span id="cursor-xy">000 / 000</span><br>
+  RANGE: <span id="cursor-rng">---</span> NMI
+</div>
+<div class="hud-corner br">
+  INTERCEPTORS: <span id="icount">00</span><br>
+  ENGAGEMENTS: <span id="ecount">00</span>
+</div>
+
+<div class="page">
+  <div class="shell">
+
+    <div class="hud-header">
+      <div class="kicker">JHU APL &mdash; ASPIRE Internship</div>
+      <h1 class="page-title">Research</h1>
+      <p class="page-subtitle">AIR &amp; MISSILE DEFENSE SECTOR // SUMMER 2025</p>
+    </div>
+
+    <div class="affil-card">
+      <div class="affil-label">Affiliation</div>
+      <div class="affil-title">Johns Hopkins University Applied Physics Laboratory</div>
+      <div class="affil-sub">Air &amp; Missile Defense Sector &nbsp;&middot;&nbsp; ASPIRE Intern</div>
+      <div class="affil-corner">SEC: UNCLASSIFIED</div>
+    </div>
+
+    <div class="status-row">
+      <div class="pill green"><span class="dot"></span>Internship Active</div>
+      <div class="pill amber"><span class="dot"></span>Project In Progress</div>
+      <div class="pill green"><span class="dot"></span>AMDS</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="tac-card">
+        <div class="card-tag">// Sector</div>
+        <h3>Air &amp; Missile Defense</h3>
+        <p>Working within JHU APL's Air and Missile Defense Sector, supporting research relevant to national defense systems with a specialization in Machine Learning.</p>
+      </div>
+      <div class="tac-card">
+        <div class="card-tag">// Program</div>
+        <h3>ASPIRE Internship</h3>
+        <p>Selected for the ASPIRE program at one of the nation's premier defense research labs, applying mathematics, physics, and CS.</p>
+      </div>
+    </div>
+
+    <div class="tac-card">
+      <div class="card-tag">// Research Focus</div>
+      <h3>Project Overview</h3>
+      <p>Full project details, poster, and findings will be posted here upon completion of the internship. This section will include technical writeups, visualizations, and supporting materials from my work conducted in AMDS.</p>
+    </div>
+
+    <a href="index.html" class="back-link">&#8592; RETURN TO HOME</a>
+  </div>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('tac-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  let W = window.innerWidth, H = window.innerHeight;
+
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // mouse
+  const mouse = { x: W/2, y: H/2 };
+  window.addEventListener('mousemove', e => {
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    document.getElementById('cursor-xy').textContent =
+      String(Math.round(e.clientX)).padStart(3,'0') + ' / ' + String(Math.round(e.clientY)).padStart(3,'0');
+    const d = Math.sqrt((e.clientX-W/2)**2 + (e.clientY-H/2)**2);
+    document.getElementById('cursor-rng').textContent = Math.round(d * 0.048);
+  });
+
+  // clock
+  setInterval(() => {
+    const n = new Date();
+    document.getElementById('hud-time').textContent =
+      [n.getHours(),n.getMinutes(),n.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':') + 'Z';
+  }, 1000);
+
+  let totalThreats = 0, totalInterceptors = 0, totalEngagements = 0;
+
+  // ── GRID
+  function drawGrid() {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(0,255,136,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x < W; x += 55) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 55) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    ctx.restore();
+  }
+
+  // ── RADAR (bottom-left)
+  const sweep = { a: 0 };
+  function drawRadar() {
+    const rx = 78, ry = H - 78, rr = 60;
+    ctx.save();
+    // rings
+    for (let i = 1; i <= 3; i++) {
+      ctx.beginPath();
+      ctx.arc(rx, ry, rr * i/3, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(0,255,136,0.1)';
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    }
+    // cross
+    ctx.strokeStyle = 'rgba(0,255,136,0.08)';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(rx-rr,ry); ctx.lineTo(rx+rr,ry); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(rx,ry-rr); ctx.lineTo(rx,ry+rr); ctx.stroke();
+
+    // sweep wedge
+    sweep.a += 0.024;
+    ctx.beginPath();
+    ctx.moveTo(rx, ry);
+    ctx.arc(rx, ry, rr, sweep.a - 0.7, sweep.a);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(0,255,136,0.14)';
+    ctx.fill();
+    // sweep line
+    ctx.beginPath();
+    ctx.moveTo(rx, ry);
+    ctx.lineTo(rx + Math.cos(sweep.a)*rr, ry + Math.sin(sweep.a)*rr);
+    ctx.strokeStyle = 'rgba(0,255,136,0.65)';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // blip dots for jets that are near
+    jets.forEach(j => {
+      const dx = j.x - W/2, dy = j.y - H/2;
+      const norm = Math.sqrt(dx*dx+dy*dy) / (Math.max(W,H)*0.6);
+      const bx = rx + (dx/Math.max(W,H)) * rr * 2.2;
+      const by = ry + (dy/Math.max(W,H)) * rr * 2.2;
+      if (Math.abs(bx-rx) < rr && Math.abs(by-ry) < rr) {
+        ctx.beginPath();
+        ctx.arc(bx, by, 2.2, 0, Math.PI*2);
+        ctx.fillStyle = j.locked ? 'rgba(255,59,59,0.9)' : 'rgba(255,179,0,0.8)';
+        ctx.fill();
+      }
+    });
+
+    ctx.font = '8px "Share Tech Mono", monospace';
+    ctx.fillStyle = 'rgba(0,255,136,0.35)';
+    ctx.textAlign = 'center';
+    ctx.fillText('AMD RADAR', rx, ry + rr + 13);
+    ctx.restore();
+  }
+
+  // ── RANGE RINGS around cursor
+  function drawRangeRings() {
+    ctx.save();
+    ctx.setLineDash([3,9]);
+    [75, 150, 250].forEach((r, i) => {
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, r, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(0,255,136,${0.07 - i*0.018})`;
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    });
+    ctx.setLineDash([]);
+    ctx.restore();
+  }
+
+  // ── CROSSHAIR
+  function drawCrosshair() {
+    ctx.save();
+    const mx = mouse.x, my = mouse.y;
+    ctx.strokeStyle = 'rgba(0,255,136,0.75)';
+    ctx.lineWidth = 1.1;
+    const s = 16, g = 5;
+    const segs = [[mx-s-g,my,mx-g,my],[mx+g,my,mx+s+g,my],[mx,my-s-g,mx,my-g],[mx,my+g,mx,my+s+g]];
+    segs.forEach(([x1,y1,x2,y2]) => {
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    });
+    // corner L-brackets
+    const cl = 8;
+    [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sy]) => {
+      const cx2 = mx + sx*(s+g), cy2 = my + sy*(s+g);
+      ctx.beginPath(); ctx.moveTo(cx2,cy2); ctx.lineTo(cx2+sx*cl,cy2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx2,cy2); ctx.lineTo(cx2,cy2+sy*cl); ctx.stroke();
+    });
+    // center dot
+    ctx.beginPath(); ctx.arc(mx,my,1.5,0,Math.PI*2);
+    ctx.fillStyle = 'rgba(0,255,136,0.6)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // ── GROUND BATTERY lines
+  function drawBatteryLines() {
+    const batteries = [[60,H-30],[W/2,H-30],[W-60,H-30]];
+    batteries.forEach(([bx,by]) => {
+      const dx = mouse.x-bx, dy = mouse.y-by;
+      ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(bx+dx*0.35, by+dy*0.35);
+      ctx.strokeStyle = 'rgba(0,255,136,0.07)';
+      ctx.lineWidth = 0.8;
+      ctx.setLineDash([5,12]); ctx.stroke(); ctx.setLineDash([]);
+      // battery icon
+      ctx.beginPath(); ctx.arc(bx,by,4,0,Math.PI*2);
+      ctx.strokeStyle = 'rgba(0,255,136,0.22)'; ctx.lineWidth=1; ctx.stroke();
+    });
+  }
+
+  // ── FIGHTER JET CLASS
+  class Jet {
+    constructor() {
+      this.id = Math.random().toString(36).slice(2,6).toUpperCase();
+      const fromLeft = Math.random() < 0.5;
+      this.x = fromLeft ? -80 : W+80;
+      this.y = H*0.08 + Math.random()*(H*0.78);
+      this.dir = fromLeft ? 1 : -1;
+      this.spd = 0.9 + Math.random()*1.2;
+      this.vy = (Math.random()-0.5)*0.5;
+      this.trail = [];
+      this.alive = true;
+      this.locked = false;
+      this.lockAmt = 0;
+      this.flashT = 0;
+      totalThreats++;
+      document.getElementById('threat-count').textContent = String(totalThreats).padStart(2,'0');
+    }
+
+    update() {
+      this.x += this.spd * this.dir;
+      this.y += this.vy;
+      this.vy *= 0.98;
+      this.y = Math.max(10, Math.min(H-10, this.y));
+
+      // mouse influence
+      const dx = mouse.x - this.x, dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if (dist < 220) {
+        this.vy += (dy/dist)*0.015;
+        this.lockAmt = Math.min(1, this.lockAmt + 0.018);
+      } else {
+        this.lockAmt = Math.max(0, this.lockAmt - 0.008);
+      }
+      this.locked = this.lockAmt > 0.65;
+
+      this.trail.push({x:this.x, y:this.y, a:0.55});
+      if (this.trail.length > 60) this.trail.shift();
+      this.trail.forEach(p => p.a *= 0.962);
+
+      if (this.x < -160 || this.x > W+160) this.alive = false;
+    }
+
+    draw() {
+      // exhaust trail
+      for (let i = 1; i < this.trail.length; i++) {
+        const t = this.trail[i], p = this.trail[i-1];
+        ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(t.x,t.y);
+        ctx.strokeStyle = `rgba(255,179,0,${t.a*0.5})`;
+        ctx.lineWidth = 1.1; ctx.stroke();
+      }
+
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.scale(this.dir, 1);
+
+      const lk = this.lockAmt;
+      const hc = `rgba(0,255,136,`;
+      const rc = `rgba(255,59,59,`;
+      const bc = lk > 0.3 ? rc : hc;
+
+      // fuselage
+      ctx.beginPath();
+      ctx.moveTo(24,0); ctx.lineTo(-6,-4); ctx.lineTo(-12,-2.5);
+      ctx.lineTo(-20,0); ctx.lineTo(-12,2.5); ctx.lineTo(-6,4);
+      ctx.closePath();
+      ctx.fillStyle = bc + (0.55 + lk*0.35) + ')'; ctx.fill();
+
+      // nose
+      ctx.beginPath();
+      ctx.moveTo(24,0); ctx.lineTo(14,-1.5); ctx.lineTo(14,1.5);
+      ctx.closePath();
+      ctx.fillStyle = bc + '0.9)'; ctx.fill();
+
+      // main wings
+      ctx.beginPath();
+      ctx.moveTo(4,0); ctx.lineTo(-8,-16); ctx.lineTo(-16,-13); ctx.lineTo(-12,0);
+      ctx.closePath();
+      ctx.fillStyle = bc + (0.35 + lk*0.25) + ')'; ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(4,0); ctx.lineTo(-8,16); ctx.lineTo(-16,13); ctx.lineTo(-12,0);
+      ctx.closePath();
+      ctx.fillStyle = bc + (0.35 + lk*0.25) + ')'; ctx.fill();
+
+      // tail fins
+      ctx.beginPath();
+      ctx.moveTo(-12,0); ctx.lineTo(-18,-9); ctx.lineTo(-22,-6); ctx.lineTo(-18,0);
+      ctx.closePath();
+      ctx.fillStyle = bc + (0.28 + lk*0.2) + ')'; ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(-12,0); ctx.lineTo(-18,9); ctx.lineTo(-22,6); ctx.lineTo(-18,0);
+      ctx.closePath();
+      ctx.fillStyle = bc + (0.28 + lk*0.2) + ')'; ctx.fill();
+
+      // engine glow
+      const glow = ctx.createRadialGradient(-19,0,0,-19,0,5);
+      glow.addColorStop(0,'rgba(255,220,80,0.95)');
+      glow.addColorStop(1,'rgba(255,120,0,0)');
+      ctx.beginPath(); ctx.arc(-19,0,5,0,Math.PI*2);
+      ctx.fillStyle = glow; ctx.fill();
+
+      ctx.restore();
+
+      // TARGET LOCK BOX
+      if (this.lockAmt > 0.2) {
+        const bw = 56, bh = 42;
+        const alpha = this.lockAmt * 0.8;
+        ctx.save();
+        ctx.strokeStyle = `rgba(255,59,59,${alpha})`;
+        ctx.lineWidth = 1;
+        const cl2 = 11;
+        [[-bw/2,-bh/2,1,1],[bw/2,-bh/2,-1,1],[bw/2,bh/2,-1,-1],[-bw/2,bh/2,1,-1]].forEach(([ox,oy,sx,sy]) => {
+          ctx.beginPath();
+          ctx.moveTo(this.x+ox, this.y+oy+sy*cl2); ctx.lineTo(this.x+ox, this.y+oy);
+          ctx.lineTo(this.x+ox+sx*cl2, this.y+oy); ctx.stroke();
+        });
+        // lock label
+        if (this.lockAmt > 0.65) {
+          ctx.font = '9px "Share Tech Mono", monospace';
+          ctx.fillStyle = `rgba(255,59,59,${alpha})`;
+          ctx.textAlign = 'center';
+          ctx.fillText('LOCK · TGT-' + this.id, this.x, this.y - bh/2 - 6);
+        }
+        ctx.restore();
+      }
+
+      // callsign label
+      ctx.save();
+      ctx.font = '8px "Share Tech Mono", monospace';
+      ctx.fillStyle = 'rgba(0,255,136,0.38)';
+      ctx.textAlign = 'center';
+      ctx.fillText(this.id, this.x, this.y + 30);
+      ctx.restore();
+    }
+  }
+
+  // ── MISSILE CLASS
+  class Missile {
+    constructor(target) {
+      this.target = target;
+      const edge = Math.random() < 0.5 ? 0 : W;
+      this.x = edge;
+      this.y = H * 0.7 + (Math.random()-0.5)*H*0.25;
+      this.spd = 5 + Math.random()*2;
+      this.trail = [];
+      this.alive = true;
+      this.age = 0;
+      totalInterceptors++;
+      totalEngagements++;
+      document.getElementById('icount').textContent = String(totalInterceptors).padStart(2,'0');
+      document.getElementById('ecount').textContent = String(totalEngagements).padStart(2,'0');
+    }
+
+    update() {
+      if (!this.target.alive) { this.alive = false; return; }
+      const dx = this.target.x - this.x, dy = this.target.y - this.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if (dist < 12) { this.alive = false; explosions.push(new Explosion(this.x,this.y)); return; }
+      this.x += (dx/dist)*this.spd;
+      this.y += (dy/dist)*this.spd;
+      this.angle = Math.atan2(dy,dx);
+      this.trail.push({x:this.x,y:this.y});
+      if (this.trail.length > 28) this.trail.shift();
+      this.age++;
+    }
+
+    draw() {
+      for (let i = 1; i < this.trail.length; i++) {
+        const a = i/this.trail.length;
+        ctx.beginPath();
+        ctx.moveTo(this.trail[i-1].x,this.trail[i-1].y);
+        ctx.lineTo(this.trail[i].x,this.trail[i].y);
+        ctx.strokeStyle = `rgba(0,255,136,${a*0.55})`;
+        ctx.lineWidth = 1.5; ctx.stroke();
+      }
+      ctx.save();
+      ctx.translate(this.x,this.y);
+      ctx.rotate(this.angle);
+      // body
+      ctx.beginPath();
+      ctx.moveTo(11,0); ctx.lineTo(-5,-2.8); ctx.lineTo(-7,0); ctx.lineTo(-5,2.8);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(0,255,136,0.92)'; ctx.fill();
+      // fins
+      [[-4,-6,-8,-4],[-4,6,-8,4]].forEach(([x1,y1,x2,y2]) => {
+        ctx.beginPath(); ctx.moveTo(x1,0); ctx.lineTo(x2,y1); ctx.lineTo(x2,y2); ctx.closePath();
+        ctx.fillStyle='rgba(0,255,136,0.45)'; ctx.fill();
+      });
+      // exhaust
+      const eg = ctx.createRadialGradient(-7,0,0,-7,0,4);
+      eg.addColorStop(0,'rgba(255,200,60,1)'); eg.addColorStop(1,'rgba(255,80,0,0)');
+      ctx.beginPath(); ctx.arc(-7,0,4,0,Math.PI*2); ctx.fillStyle=eg; ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // ── EXPLOSION
+  class Explosion {
+    constructor(x,y) {
+      this.x=x; this.y=y; this.age=0; this.maxAge=42;
+      this.pts = Array.from({length:16},()=>({
+        a: Math.random()*Math.PI*2,
+        spd: 1.5+Math.random()*4,
+        r: 0.8+Math.random()*2
+      }));
+    }
+    draw() {
+      const p = this.age/this.maxAge;
+      this.pts.forEach(pt => {
+        const px = this.x+Math.cos(pt.a)*pt.spd*this.age;
+        const py = this.y+Math.sin(pt.a)*pt.spd*this.age;
+        ctx.beginPath(); ctx.arc(px,py,pt.r*(1-p),0,Math.PI*2);
+        ctx.fillStyle = p < 0.45
+          ? `rgba(255,200,60,${1-p*1.6})`
+          : `rgba(255,60,60,${1-p})`;
+        ctx.fill();
+      });
+      ctx.beginPath(); ctx.arc(this.x,this.y,p*45,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(255,179,0,${(1-p)*0.5})`; ctx.lineWidth=1.2; ctx.stroke();
+      // secondary ring
+      ctx.beginPath(); ctx.arc(this.x,this.y,p*70,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(255,59,59,${(1-p)*0.25})`; ctx.lineWidth=0.8; ctx.stroke();
+      this.age++;
+    }
+    get alive() { return this.age < this.maxAge; }
+  }
+
+  // ── SCROLLING HUD READOUTS (top-right)
+  function drawReadouts() {
+    const t = Date.now();
+    const lines = [
+      'ALT: ' + (12400+Math.round(Math.sin(t/900)*180)) + ' FT',
+      'SPD: ' + (485+Math.round(Math.sin(t/1300)*22)) + ' KTS',
+      'HDG: ' + String(Math.floor((t/220)%360)).padStart(3,'0') + '\u00b0',
+      'G: ' + (4.2+Math.sin(t/600)*0.8).toFixed(1),
+    ];
+    ctx.save();
+    ctx.font = '9px "Share Tech Mono", monospace';
+    ctx.fillStyle = 'rgba(0,255,136,0.25)';
+    ctx.textAlign = 'right';
+    const hudOffset = 90;
+    const readoutRightPadding = 70;
+    lines.forEach((l,i) => ctx.fillText(l, W - readoutRightPadding, hudOffset + i*15));
+    ctx.restore();
+  }
+
+  // ── STATE
+  let jets = [], missiles = [], explosions = [];
+  let jetSpawnTimer = 0, missileFireTimer = 0;
+
+  jets.push(new Jet(), new Jet());
+
+  // ── LOOP
+  function loop(ts) {
+    ctx.fillStyle = '#0a0c10';
+    ctx.fillRect(0,0,W,H);
+
+    drawGrid();
+    drawBatteryLines();
+    drawRadar();
+    drawRangeRings();
+    drawReadouts();
+
+    // spawn jets
+    jetSpawnTimer++;
+    if (jetSpawnTimer > 280 && jets.filter(j=>j.alive).length < 5) {
+      jets.push(new Jet()); jetSpawnTimer = 0;
+    }
+    jets = jets.filter(j=>j.alive);
+    jets.forEach(j=>{ j.update(); j.draw(); });
+
+    // auto-fire at locked jets
+    missileFireTimer++;
+    if (missileFireTimer > 90) {
+      const locked = jets.filter(j=>j.locked);
+      if (locked.length && missiles.length < 5) {
+        missiles.push(new Missile(locked[Math.floor(Math.random()*locked.length)]));
+      }
+      missileFireTimer = 0;
+    }
+
+    missiles = missiles.filter(m=>m.alive);
+    missiles.forEach(m=>{ m.update(); m.draw(); });
+
+    explosions = explosions.filter(e=>e.alive);
+    explosions.forEach(e=>e.draw());
+
+    drawCrosshair();
+    requestAnimationFrame(loop);
+  }
+
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

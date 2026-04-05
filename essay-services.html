@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Essay Services - Neal Shandilya</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <canvas id="network"></canvas>
+
+  <section class="simple-page">
+    <div class="simple-page-content">
+      <span class="section-kicker">Application Support</span>
+      <h1>Essay Services</h1>
+
+      <div class="services-grid" style="margin-bottom: 1.25rem;">
+        <article class="glass-card">
+          <h3>Overview</h3>
+          <p>
+            THIS SECTION IS CLOSED FOR THE YEAR 2026-2027.
+          </p>
+        </article>
+
+        <article class="glass-card">
+          <h3>Why Me</h3>
+          <p>
+            I AM GOATED AT WRITING COLLEGE ESSAYS. THIS SECTION IS CLOSED FOR THE YEAR 2026-2027.
+          </p>
+        </article>
+      </div>
+
+      <h2 style="margin-top: 2rem;">Proof of Results</h2>
+
+      <div class="proof-grid">
+        <button
+          class="proof-card"
+          type="button"
+          data-img="images/personal-statement-success.png"
+          data-title="Personal Statement Success"
+          data-desc="This shows a successful application outcome tied to strong personal statement work, demonstrating the level of strategy, structure, and polish I aim to bring to essay support."
+        >
+          <img src="images/personal-statement-success.png" alt="Personal Statement Success">
+          <span>Personal Statement Success</span>
+        </button>
+      </div>
+
+      <div class="proof-modal" id="proofModal" aria-hidden="true">
+        <div class="proof-modal-backdrop"></div>
+
+        <div class="proof-modal-content">
+          <button class="proof-modal-close" id="proofModalClose" aria-label="Close">
+            &times;
+          </button>
+
+          <div class="proof-modal-layout">
+            <div class="proof-modal-image-wrap">
+              <img id="proofModalImg" src="" alt="">
+            </div>
+
+            <div class="proof-modal-info">
+              <p class="proof-modal-kicker">Proof / Result</p>
+              <h3 id="proofModalTitle"></h3>
+              <p id="proofModalDesc"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <article class="glass-card table-card">
+        <h3>Services & Pricing</h3>
+        <div class="table-wrap">
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Personal Statement Review</td>
+                <td>$60</td>
+              </tr>
+              <tr>
+                <td>Activities Section Review</td>
+                <td>$25</td>
+              </tr>
+              <tr>
+                <td>Honors Section Review</td>
+                <td>$20</td>
+              </tr>
+              <tr>
+                <td>Supplemental Essay Review</td>
+                <td>$30 each</td>
+              </tr>
+              <tr>
+                <td>Full Application Review Package</td>
+                <td>$140</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutoring - Neal Shandilya</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <canvas id="network"></canvas>
+
+  <section class="simple-page">
+    <div class="simple-page-content">
+      <span class="section-kicker">Academic Support</span>
+      <h1>Tutoring</h1>
+
+      <div class="services-grid" style="margin-bottom: 1.25rem;">
+        <article class="glass-card">
+          <h3>Overview</h3>
+          <p>
+            I offer tutoring for students who want stronger understanding,
+            sharper problem solving, and more confidence in technical subjects.
+            Sessions can be tailored for school coursework, enrichment, or
+            competition-style preparation.
+          </p>
+        </article>
+
+        <article class="glass-card">
+          <h3>Why Me</h3>
+          <p>
+            I combine strong subject interest with recent student experience,
+            which means I understand both the content and the learning process.
+            I focus on clarity, structure, and building real understanding
+            instead of short-term memorization.
+          </p>
+        </article>
+      </div>
+      <h2 style="margin-top: 2rem;">Proof of Performance</h2>
+
+<div class="proof-grid">
+
+  <button
+    class="proof-card"
+    type="button"
+    data-img="images/sat-score.png"
+    data-title="SAT Score"
+    data-desc="This shows strong standardized academic performance and supports my ability to teach rigorous material clearly and effectively."
+  >
+    <img src="images/sat-score.png" alt="SAT Score">
+    <span>SAT Score</span>
+  </button>
+
+  <button
+    class="proof-card"
+    type="button"
+    data-img="images/act-score.png"
+    data-title="ACT Score"
+    data-desc="This reinforces broad academic strength across multiple tested areas, not just one narrow subject."
+  >
+    <img src="images/act-score.png" alt="ACT Score">
+    <span>ACT Score</span>
+  </button>
+
+  <button
+    class="proof-card"
+    type="button"
+    data-img="images/usaco-plat.png"
+    data-title="USACO Platinum"
+    data-desc="USACO Platinum reflects advanced competitive programming skill, strong logic, and high-level problem solving under pressure."
+  >
+    <img src="images/usaco-plat.png" alt="USACO Platinum">
+    <span>USACO Platinum</span>
+  </button>
+
+  <button
+    class="proof-card"
+    type="button"
+    data-img="images/amc.png"
+    data-title="AMC"
+    data-desc="This demonstrates serious mathematical ability and contest experience, especially in creative and non-routine problem solving."
+  >
+    <img src="images/amc.png" alt="AMC">
+    <span>AMC</span>
+  </button>
+
+  <button
+    class="proof-card"
+    type="button"
+    data-img="images/usapho.png"
+    data-title="USAPhO"
+    data-desc="USAPhO qualification-level work shows deep physics understanding and the ability to apply concepts beyond standard classroom methods."
+  >
+    <img src="images/usapho.png" alt="USAPhO">
+    <span>USAPhO</span>
+  </button>
+
+  <button
+    class="proof-card"
+    type="button"
+    data-img="images/usamo.png"
+    data-title="USAMO"
+    data-desc="USAMO-level achievement is one of the strongest indicators of elite mathematical reasoning and proof-based thinking."
+  >
+    <img src="images/usamo.png" alt="USAMO">
+    <span>USAMO</span>
+  </button>
+
+</div>
+
+<!-- Lightbox Modal -->
+<div class="proof-modal" id="proofModal" aria-hidden="true">
+  <div class="proof-modal-backdrop"></div>
+
+  <div class="proof-modal-content">
+    <button class="proof-modal-close" id="proofModalClose" aria-label="Close">
+      &times;
+    </button>
+
+    <div class="proof-modal-layout">
+      <div class="proof-modal-image-wrap">
+        <img id="proofModalImg" src="" alt="">
+      </div>
+
+      <div class="proof-modal-info">
+        <p class="proof-modal-kicker">Proof / Achievement</p>
+        <h3 id="proofModalTitle"></h3>
+        <p id="proofModalDesc"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <article class="glass-card table-card">
+        <h3>Subjects & Pricing</h3>
+        <div class="table-wrap">
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mathematics</td>
+                <td>$40/hour</td>
+              </tr>
+              <tr>
+                <td>Physics</td>
+                <td>$40/hour</td>
+              </tr>
+              <tr>
+                <td>Programming</td>
+                <td>$45/hour</td>
+              </tr>
+              <tr>
+                <td>Competition / Enrichment Prep</td>
+                <td>$50/hour</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
