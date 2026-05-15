@@ -9,7 +9,7 @@ Welcome to the repository for my personal portfolio. This site serves as a centr
 ---
 
 ## About Me
-I am a student researcher passionate about the intersection of **artificial intelligence**, **quantitative research**, and **applied mathematics**. 
+I am a student researcher passionate about the intersection of **artificial intelligence**, **physics**, and **applied mathematics**. 
 
 Currently, I am an **ASPIRE Intern** at the **Johns Hopkins University Applied Physics Laboratory (JHU APL)** within the Air & Missile Defense Sector. My work focuses on leveraging computational methods to solve complex, real-world problems.
 
