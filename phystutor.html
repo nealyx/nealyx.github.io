@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutoring - Neal Shandilya</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body>
+  <canvas id="network"></canvas>
+
+  <section class="simple-page">
+    <div class="simple-page-content">
+
+      <span class="section-kicker">Physics Tutoring</span>
+      <h1>Neal's Physics Aids</h1>
+
+      <div class="services-grid" style="margin-top: 1.25rem;">
+        <article class="glass-card tilt-card">
+          <h3>USA Physics Team 2026</h3>
+          <p>
+            Learn from a 2026 USA Physics Team member with experience in
+            olympiad-level physics, AP Physics, F=ma, and advanced problem solving.
+          </p>
+        </article>
+
+        <article class="glass-card tilt-card">
+          <h3>Custom Handouts</h3>
+          <p>
+            Every topic includes guided explanations, worked examples,
+            problem-solving strategies, and targeted practice material
+            designed to build intuition step by step.
+          </p>
+        </article>
+      </div>
+
+      <!-- COURSES -->
+
+      <section id="courses" style="margin-top: 2rem;">
+
+        <span class="section-kicker">Curriculum</span>
+
+        <h1 style="margin-bottom: 0.75rem;">
+          Topics I Teach
+        </h1>
+
+        <p>
+          Click any card to explore subtopics. All units can come
+          with custom handouts and targeted practice.
+        </p>
+
+        <div class="course-tabs">
+          <button class="tab-btn active" onclick="showCourse('ap1', this)">
+            AP Physics 1
+          </button>
+
+          <button class="tab-btn" onclick="showCourse('ap2', this)">
+            AP Physics 2
+          </button>
+
+          <button class="tab-btn" onclick="showCourse('apc', this)">
+            AP Physics C: Mechanics
+          </button>
+
+          <button class="tab-btn" onclick="showCourse('fma', this)">
+            F=ma
+          </button>
+        </div>
+
+        <!-- AP1 -->
+        <div class="course-panel active" id="panel-ap1">
+          <div class="topic-grid" id="grid-ap1"></div>
+        </div>
+
+        <!-- AP2 -->
+        <div class="course-panel" id="panel-ap2">
+          <div class="topic-grid" id="grid-ap2"></div>
+        </div>
+
+        <!-- APC -->
+        <div class="course-panel" id="panel-apc">
+          <div class="topic-grid" id="grid-apc"></div>
+        </div>
+
+        <!-- FMA -->
+        <div class="course-panel" id="panel-fma">
+          <div class="topic-grid" id="grid-fma"></div>
+        </div>
+
+      </section>
+
+      <!-- CONTACT -->
+
+      <section id="contact" style="margin-top: 3rem;">
+
+        <!-- NO TILT CARD HERE -->
+        <div class="tutoring-contact-box glass-card">
+
+          <h2>Book a Session</h2>
+
+          <p>
+            Send me a message with your topic
+            and goals. I'll follow up within 24 hours.
+          </p>
+
+          <form
+            action="https://formspree.io/f/xnjwkbdv"
+            method="POST"
+            class="tutoring-form"
+          >
+
+            <input
+              type="hidden"
+              name="_subject"
+              value="New Physics Tutoring Request"
+            />
+
+            <input
+              type="text"
+              name="name"
+              placeholder="Your name"
+              required
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email address"
+              required
+            />
+
+            <input
+              type="text"
+              name="topic"
+              placeholder="Topic (e.g. F=ma, Rotational Dynamics, E&M)"
+              required
+            />
+
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="Tell me about your goals or what you're struggling with..."
+              required
+            ></textarea>
+
+            <button type="submit" class="send-message-btn">
+              Send Message →
+            </button>
+
+          </form>
+
+        </div>
+
+      </section>
+
+      <a href="index.html" class="back-link">
+        ← Back to Home
+      </a>
+
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+
+  <script>
+
+    // AP PHYSICS 1
+
+    const ap1Topics = [
+      {
+        name: "Kinematics",
+        sub: [
+          "Position, velocity, and acceleration",
+          "Motion graphs",
+          "Projectile motion",
+          "Relative motion"
+        ]
+      },
+
+      {
+        name: "Newton's Laws of Motion",
+        sub: [
+          "Newton's 1st, 2nd, and 3rd laws",
+          "Free-body diagrams",
+          "Friction forces",
+          "Tension and normal force"
+        ]
+      },
+
+      {
+        name: "Circular Motion and Gravitation",
+        sub: [
+          "Centripetal acceleration",
+          "Uniform circular motion",
+          "Newton's law of gravitation",
+          "Orbital mechanics"
+        ]
+      },
+
+      {
+        name: "Energy",
+        sub: [
+          "Work and kinetic energy",
+          "Potential energy",
+          "Conservation of energy",
+          "Power"
+        ]
+      },
+
+      {
+        name: "Momentum",
+        sub: [
+          "Linear momentum and impulse",
+          "Conservation of momentum",
+          "Elastic and inelastic collisions",
+          "Center of mass"
+        ]
+      },
+
+      {
+        name: "Simple Harmonic Motion",
+        sub: [
+          "Springs and Hooke's law",
+          "Pendulums",
+          "Period and frequency",
+          "Energy in SHM"
+        ]
+      },
+
+      {
+        name: "Torque and Rotational Motion",
+        sub: [
+          "Torque and rotational equilibrium",
+          "Rotational kinematics",
+          "Moment of inertia",
+          "Angular momentum"
+        ]
+      },
+
+      {
+        name: "Electric Charge and Electric Force",
+        sub: [
+          "Charge properties",
+          "Coulomb's law",
+          "Electric fields",
+          "Conductors and insulators"
+        ]
+      },
+
+      {
+        name: "DC Circuits",
+        sub: [
+          "Current and resistance",
+          "Ohm's law",
+          "Series and parallel circuits",
+          "Kirchhoff's laws"
+        ]
+      },
+
+      {
+        name: "Mechanical Waves and Sound",
+        sub: [
+          "Wave properties",
+          "Superposition and interference",
+          "Standing waves",
+          "Sound and Doppler effect"
+        ]
+      }
+    ];
+
+    // AP PHYSICS 2
+
+    const ap2Topics = [
+      {
+        name: "Fluids",
+        sub: [
+          "Density and pressure",
+          "Pascal's principle",
+          "Buoyancy and Archimedes' principle",
+          "Fluid flow and Bernoulli's equation"
+        ]
+      },
+
+      {
+        name: "Thermodynamics",
+        sub: [
+          "Temperature and thermal equilibrium",
+          "Heat and the first law",
+          "Ideal gas law",
+          "Second law and entropy"
+        ]
+      },
+
+      {
+        name: "Electric Force, Field, and Potential",
+        sub: [
+          "Electric field lines",
+          "Electric potential energy",
+          "Electric potential",
+          "Capacitance"
+        ]
+      },
+
+      {
+        name: "Electric Circuits",
+        sub: [
+          "Capacitors in circuits",
+          "RC circuits",
+          "Resistivity",
+          "Ohmic vs non-ohmic behavior"
+        ]
+      },
+
+      {
+        name: "Magnetism and Electromagnetic Induction",
+        sub: [
+          "Magnetic fields and forces",
+          "Biot-Savart and Ampere's law",
+          "Faraday's law",
+          "Lenz's law and inductors"
+        ]
+      },
+
+      {
+        name: "Geometric and Physical Optics",
+        sub: [
+          "Reflection and refraction",
+          "Snell's law",
+          "Lenses and mirrors",
+          "Diffraction and interference"
+        ]
+      },
+
+      {
+        name: "Quantum, Atomic, and Nuclear Physics",
+        sub: [
+          "Photoelectric effect",
+          "Wave-particle duality",
+          "Bohr model",
+          "Radioactive decay"
+        ]
+      }
+    ];
+
+    // AP PHYSICS C
+
+    const apcTopics = [
+      {
+        name: "Advanced Kinematics",
+        sub: [
+          "Derivatives of position functions",
+          "Integration for displacement and velocity",
+          "Acceleration as second derivative",
+          "Two-dimensional motion with calculus"
+        ]
+      },
+
+      {
+        name: "Advanced Newton's Laws",
+        sub: [
+          "Variable force problems",
+          "Constraint equations",
+          "Systems of particles",
+          "Non-inertial reference frames"
+        ]
+      },
+
+      {
+        name: "Advanced Work, Energy, and Power",
+        sub: [
+          "Work done by variable forces",
+          "Work-energy theorem",
+          "Conservative and non-conservative forces",
+          "Potential energy functions"
+        ]
+      },
+
+      {
+        name: "Advanced Momentum",
+        sub: [
+          "Center of mass calculations",
+          "Impulse-momentum theorem",
+          "Rocket propulsion",
+          "Two-dimensional collision analysis"
+        ]
+      },
+
+      {
+        name: "Advanced Rotation",
+        sub: [
+          "Angular kinematics with calculus",
+          "Torque and angular momentum",
+          "Rotational inertia by integration",
+          "Parallel and perpendicular axis theorems"
+        ]
+      },
+
+      {
+        name: "Advanced Oscillations",
+        sub: [
+          "Differential equations of SHM",
+          "Damped oscillations",
+          "Driven oscillations and resonance",
+          "Phase space analysis"
+        ]
+      },
+
+      {
+        name: "Advanced Gravitation",
+        sub: [
+          "Gravitational potential energy",
+          "Escape velocity",
+          "Kepler's laws",
+          "Orbital energy and bound states"
+        ]
+      }
+    ];
+
+    // F=MA
+
+    const fmaTopics = [
+
+      {
+        name: "Advanced Mechanics Foundations",
+        sub: [
+          "Units and dimensional analysis",
+          "Vectors and components",
+          "Free-body diagram speed",
+          "Approximation and scaling"
+        ]
+      },
+
+      {
+        name: "Advanced Kinematics",
+        sub: [
+          "One-dimensional motion",
+          "Two-dimensional motion",
+          "Projectile motion",
+          "Relative motion"
+        ]
+      },
+
+      {
+        name: "Advanced Forces and Newton's Laws",
+        sub: [
+          "Static and kinetic friction",
+          "Tension and pulleys",
+          "Inclines",
+          "Multiple-body systems"
+        ]
+      },
+
+      {
+        name: "Advanced Circular Motion",
+        sub: [
+          "Centripetal acceleration",
+          "Banked curves",
+          "Vertical circles",
+          "Non-uniform circular motion"
+        ]
+      },
+
+      {
+        name: "Advanced Work and Energy",
+        sub: [
+          "Work-energy theorem",
+          "Conservative forces",
+          "Energy conservation",
+          "Power"
+        ]
+      },
+
+      {
+        name: "Advanced Momentum and Collisions",
+        sub: [
+          "Impulse",
+          "Conservation of momentum",
+          "Elastic collisions",
+          "Center of mass"
+        ]
+      },
+
+      {
+        name: "Advanced Rotation",
+        sub: [
+          "Torque",
+          "Rotational equilibrium",
+          "Moment of inertia",
+          "Angular momentum"
+        ]
+      },
+
+      {
+        name: "Advanced Oscillations",
+        sub: [
+          "Spring-mass systems",
+          "Pendulums",
+          "Period and frequency",
+          "Energy in SHM"
+        ]
+      },
+
+      {
+        name: "Advanced Gravitation",
+        sub: [
+          "Newton's law of gravitation",
+          "Orbits",
+          "Escape speed",
+          "Kepler-style reasoning"
+        ]
+      },
+
+      {
+        name: "Past Tests and Handouts",
+        sub: [
+          "Go over past F=ma tests",
+          "Target weak areas by question type",
+          "Review custom handouts",
+          "Build timed-test strategy"
+        ]
+      }
+    ];
+
+    function buildGrid(containerId, topics) {
+
+      const grid = document.getElementById(containerId);
+
+      grid.innerHTML = "";
+
+      topics.forEach((topic, index) => {
+
+        const card = document.createElement("div");
+
+        card.className = "topic-card tilt-card";
+
+        card.innerHTML = `
+          <div class="topic-num">
+            UNIT ${String(index + 1).padStart(2, "0")}
+          </div>
+
+          <div class="topic-name">
+            ${topic.name}
+          </div>
+
+          <span class="topic-arrow">+</span>
+
+          <div class="topic-details">
+            <ul class="sub-list">
+              ${topic.sub.map(item => `<li>${item}</li>`).join("")}
+            </ul>
+
+            <span class="handout-tag">
+              Handout Available
+            </span>
+          </div>
+        `;
+
+        card.addEventListener("click", () => {
+
+          const wasExpanded =
+            card.classList.contains("expanded");
+
+          document
+            .querySelectorAll(".topic-card.expanded")
+            .forEach(openCard => {
+              openCard.classList.remove("expanded");
+            });
+
+          if (!wasExpanded) {
+            card.classList.add("expanded");
+          }
+
+        });
+
+        grid.appendChild(card);
+
+      });
+
+    }
+
+    buildGrid("grid-ap1", ap1Topics);
+    buildGrid("grid-ap2", ap2Topics);
+    buildGrid("grid-apc", apcTopics);
+    buildGrid("grid-fma", fmaTopics);
+
+    function showCourse(id, button) {
+
+      document
+        .querySelectorAll(".course-panel")
+        .forEach(panel => {
+          panel.classList.remove("active");
+        });
+
+      document
+        .querySelectorAll(".tab-btn")
+        .forEach(tab => {
+          tab.classList.remove("active");
+        });
+
+      document
+        .getElementById("panel-" + id)
+        .classList.add("active");
+
+      button.classList.add("active");
+
+    }
+
+  </script>
+</body>
+</html>
