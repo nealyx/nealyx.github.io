@@ -5,7 +5,7 @@
   'use strict';
 
   var CFG = {
-    bgColor:        '#000000', // Pure black space
+    bgColor:        '#000000', 
     nodeBright:     '#ffffff', 
     accentColor:    '#f0643a', 
     particleCount:  2000,      
@@ -13,12 +13,8 @@
   };
 
   var canvas, ctx, W, H, raf;
-  // Auto-rotation only, no mouse parallax
   var yaw = 0, pitch = 0.35;
-  
-  // Localized jelly mouse interaction
   var mouseX = -1000, mouseY = -1000;
-  
   var scrollY = 0, maxScroll = 1;
   var lastTime = 0;
   var particles = [];
@@ -38,7 +34,7 @@
     canvas.setAttribute('aria-hidden', 'true');
     document.body.insertBefore(canvas, document.body.firstChild);
 
-    ctx = canvas.getContext('2d');
+    ctx = canvas.getContext('2d', { alpha: false }); // Optimize for black background
     resize();
     buildParticles();
 
@@ -48,18 +44,15 @@
       maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
     }, { passive: true });
     
-    // Track mouse for local jelly physics
     window.addEventListener('mousemove', function(e) {
       mouseX = e.clientX;
       mouseY = e.clientY;
     }, { passive: true });
     
-    // Optional: when cursor leaves, put mouse out of bounds
     window.addEventListener('mouseout', function(e) {
       mouseX = -1000; mouseY = -1000;
     }, { passive: true });
     
-    // Just for cursor styling
     canvas.addEventListener('pointerdown', function() { canvas.style.cursor = 'grabbing'; });
     window.addEventListener('pointerup', function() { canvas.style.cursor = 'grab'; });
     
@@ -130,13 +123,26 @@
       var spaceZ = (Math.random() - 0.5) * 4.0;
       var posSpace = [spaceX, spaceY, spaceZ];
       
-      var arm = Math.random() > 0.5 ? 0 : Math.PI;
-      var dist = Math.random() * 3.0;
-      var angle = dist * 2.5 + arm;
-      var spread = 0.2 + (dist * 0.1);
-      var gx = Math.cos(angle) * dist + (Math.random()-0.5)*spread;
-      var gz = Math.sin(angle) * dist + (Math.random()-0.5)*spread;
-      var gy = (Math.random()-0.5) * 0.3;
+      // High quality spiral galaxy formulation
+      var arms = 3; // 3 elegant arms
+      var armIndex = Math.floor(Math.random() * arms);
+      var armAngle = (armIndex / arms) * Math.PI * 2;
+      
+      // Cubed random gives dense center, sparse edges
+      var u = Math.random();
+      var dist = u * u * u * 4.5; 
+      
+      var angle = dist * 1.8 + armAngle; // Wind the spiral
+      
+      var spread = 0.05 + (dist * 0.12); // Tighter at core
+      // Add a slight gaussian-like scattering
+      var r1 = (Math.random() + Math.random() + Math.random() - 1.5);
+      var r2 = (Math.random() + Math.random() + Math.random() - 1.5);
+      var r3 = (Math.random() + Math.random() + Math.random() - 1.5);
+      
+      var gx = Math.cos(angle) * dist + r1 * spread;
+      var gz = Math.sin(angle) * dist + r2 * spread;
+      var gy = r3 * spread * 0.4; // flat disk
       var posGalaxy = [gx, gy, gz];
       
       var posStart = randomSpherePoint(6 + Math.random() * 6);
@@ -152,7 +158,6 @@
         phase: Math.random() * Math.PI * 2,
         speed: Math.random() * 0.002 + 0.001,
         drift: [ (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2 ],
-        // Jelly physics state
         jOff: [0,0,0],
         jVel: [0,0,0]
       });
@@ -183,8 +188,6 @@
     }
 
     yaw += CFG.rotateSpeed * dt;
-    
-    // Constant base pitch for the pyramid, since scroll will change it
     var basePitch = 0.35;
 
     draw(now, basePitch, yaw, dt);
@@ -192,18 +195,12 @@
   }
 
   function draw(now, activePitch, activeYaw, dt) {
-    ctx.clearRect(0, 0, W, H);
-    
-    // The user requested NO grey, so we use pure black and very faint gradient
-    var bgGrd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H));
-    bgGrd.addColorStop(0, '#040506');
-    bgGrd.addColorStop(1, '#000000');
-    ctx.fillStyle = bgGrd;
+    // Pure black, opaque fill
+    ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, W, H);
 
     var scrollRatio = scrollY / Math.max(maxScroll, 1000); 
     
-    // Rotation is now driven strictly by scroll, not mouse
     var scrollPitchOffset = Math.min(scrollRatio / 0.15, 1) * 0.8;
     var currentPitch = activePitch + scrollPitchOffset;
     var currentYaw = activeYaw;
@@ -248,45 +245,43 @@
           cz += Math.sin(now * 0.0017 + p.phase) * 0.02;
       }
 
-      // First project without jelly offset to find 2D position for mouse hit detection
       var projRaw = project(cx, cy, cz, currentPitch, currentYaw);
       var rPx = projRaw[0], rPy = projRaw[1];
       
-      // Calculate mouse repulsion (Jelly effect)
       var dx = rPx - mouseX;
       var dy = rPy - mouseY;
       var distSq = dx*dx + dy*dy;
-      var hoverRadius = 150;
+      
+      // SMALL, CONTROLLED HOVER SPAN (Radius = 70px)
+      var hoverRadius = 70;
       
       if (distSq < hoverRadius*hoverRadius) {
         var dist = Math.sqrt(distSq);
         var force = (hoverRadius - dist) / hoverRadius;
-        // Push particle in 3D based on 2D screen direction
-        // Inverting the projection is complex, so we approximate a push on X/Y axis
-        p.jVel[0] += (dx / dist) * force * 0.012;
-        p.jVel[1] += (dy / dist) * force * 0.012;
-        p.jVel[2] += (Math.random() - 0.5) * force * 0.01; // subtle Z push
+        
+        // Pushes sharply but not too far
+        p.jVel[0] += (dx / dist) * force * 0.05;
+        p.jVel[1] += (dy / dist) * force * 0.05;
+        p.jVel[2] += (Math.random() - 0.5) * force * 0.02; 
       }
       
-      // Spring physics back to 0
-      p.jVel[0] += -p.jOff[0] * 0.03; // stiffness
-      p.jVel[1] += -p.jOff[1] * 0.03;
-      p.jVel[2] += -p.jOff[2] * 0.03;
+      // Thick, high-quality spring physics (Stiffer and heavier damping)
+      p.jVel[0] += -p.jOff[0] * 0.20; // High stiffness
+      p.jVel[1] += -p.jOff[1] * 0.20;
+      p.jVel[2] += -p.jOff[2] * 0.20;
       
-      p.jVel[0] *= 0.88; // damping/friction
-      p.jVel[1] *= 0.88;
-      p.jVel[2] *= 0.88;
+      p.jVel[0] *= 0.65; // Heavy friction (thick jelly)
+      p.jVel[1] *= 0.65;
+      p.jVel[2] *= 0.65;
       
       p.jOff[0] += p.jVel[0];
       p.jOff[1] += p.jVel[1];
       p.jOff[2] += p.jVel[2];
 
-      // Add jelly offset to actual position
       cx += p.jOff[0];
       cy += p.jOff[1];
       cz += p.jOff[2];
 
-      // Final projection with jelly offsets
       var proj = project(cx, cy, cz, currentPitch, currentYaw);
       var px = proj[0], py = proj[1], sc = proj[2];
       
@@ -302,11 +297,13 @@
         ctx.globalAlpha = Math.min((0.6 + pulse * 0.4) * wPyr, 1);
       } else {
         if (wGal > 0.5) {
+          // Galaxy coloring matching the image (bright white/blue core, orange outer elements)
           var distToCenter = Math.sqrt(p.pGal[0]*p.pGal[0] + p.pGal[2]*p.pGal[2]);
-          if (distToCenter < 1.0) ctx.fillStyle = '#ffeedd';
-          else if (distToCenter < 2.0) ctx.fillStyle = '#ffffff';
-          else ctx.fillStyle = '#cceeff';
-          ctx.globalAlpha = p.a * Math.min(sc, 1.5);
+          if (distToCenter < 1.5) ctx.fillStyle = '#ffffff';
+          else if (Math.random() > 0.8) ctx.fillStyle = '#ffb380'; // orange stars
+          else if (Math.random() > 0.5) ctx.fillStyle = '#99ccff'; // blue stars
+          else ctx.fillStyle = '#e6f2ff';
+          ctx.globalAlpha = p.a * Math.min(sc, 2.0);
         } else if (wPyr > 0.5) {
           ctx.fillStyle = CFG.nodeBright;
           ctx.globalAlpha = Math.min(p.a * 1.5 * sc * wPyr, 1); 
@@ -323,9 +320,6 @@
     var style = document.createElement('style');
     style.textContent = [
       '#hero-canvas { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; pointer-events:none; }',
-      // We need the body/html to NOT catch the cursor so the cursor can be styled,
-      // but canvas must not block clicks on actual page links.
-      // So we apply cursor: grab to the hero section which covers the top area.
       '.hero { cursor: grab; }',
       '.hero:active { cursor: grabbing; }'
     ].join('\n');
