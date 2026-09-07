@@ -1745,3 +1745,35 @@ details[open]>summary .expand {
 
 }
 
+
+/* ── Custom scrollbar ── */
+:root {
+  --scrollbar-thumb: #1b2a4a;
+  --scrollbar-track: #e8e6de;
+}
+
+/* Firefox + modern standard */
+* {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+  border: 2px solid var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #243a66;
+}
