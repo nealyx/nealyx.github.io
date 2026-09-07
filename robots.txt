@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nealyx.github.io/sitemap.xml

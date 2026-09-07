@@ -1,0 +1,57 @@
+[
+  {
+    "slug": "ramsey-theory",
+    "category": "Mathematics",
+    "title": "Finding structure in disorder",
+    "description": "Ramsey-theoretic mathematics research with Prof. William Gasarch at the University of Maryland.",
+    "context": "William Gasarch · University of Maryland",
+    "tags": [
+      "Ramsey theory",
+      "Combinatorics"
+    ],
+    "status": "Research",
+    "source": "User-supplied brief",
+    "body": [
+      "My mathematics research includes Ramsey-theoretic work and collaboration with Prof. William Gasarch at the University of Maryland.",
+      "Ramsey theory asks when a sufficiently large system must contain an ordered substructure, however its parts are arranged. That question is behind the little two-color graph on this site."
+    ],
+    "availability": "A project-specific abstract and public paper are not available here yet."
+  },
+  {
+    "slug": "applied-ml",
+    "category": "AI / Research",
+    "title": "Machine learning at APL",
+    "description": "Machine-learning research through the ASPIRE program at Johns Hopkins Applied Physics Laboratory.",
+    "context": "JHU APL · ASPIRE",
+    "year": "2025–2026",
+    "tags": [
+      "Machine learning",
+      "Applied physics"
+    ],
+    "status": "Research",
+    "source": "Original research.html",
+    "body": [
+      "Through the ASPIRE program, I worked within the Air & Missile Defense Sector at the Johns Hopkins University Applied Physics Laboratory, with a specialization in machine learning.",
+      "I presented research at the 2025 JHU APL Showcase and the 2026 Princeton IEEE ISEC."
+    ],
+    "availability": "Technical details, a poster, and findings are not publicly available on this site."
+  },
+  {
+    "slug": "olympiad-book",
+    "category": "Writing",
+    "title": "A way into olympiad mathematics",
+    "description": "An introduction that builds from early competition mathematics toward proof-based olympiad thinking.",
+    "context": "Expository mathematics · Book in progress",
+    "tags": [
+      "Problem solving",
+      "Mathematical exposition"
+    ],
+    "status": "In progress",
+    "source": "Original about.html",
+    "body": [
+      "I’m writing an introduction to the USA Mathematical Olympiad, designed to take students from AMC 8 and early competition mathematics toward USAMO-level thinking.",
+      "The planned book will be available for free. The goal is to make the path into difficult mathematics easier to find."
+    ],
+    "availability": "The manuscript is in progress; there is no public download yet."
+  }
+]

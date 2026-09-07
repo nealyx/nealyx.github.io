@@ -1,0 +1,9 @@
+{
+ "name":"Neal Shandilya",
+ "email":"nealshandilya@gmail.com",
+ "origin":"https://nealyx.github.io",
+ "description":"Proofs, programs, and physical intuition. Mathematics research, applied machine learning, olympiad problem solving, and teaching by Neal Shandilya.",
+ "socials":[{"label":"GitHub","url":"https://github.com/nealyx"},{"label":"LinkedIn","url":"https://www.linkedin.com/in/neal-shandilya/"},{"label":"YouTube","url":"https://www.youtube.com/@plaz5451"},{"label":"Instagram","url":"https://www.instagram.com/neal.shandilya/"}],
+ "milestones":[{"year":"2026","title":"USA Physics Team","detail":"Team member","source":"Original index.html; about.html"},{"year":"2026","title":"USA Mathematical Olympiad","detail":"Qualifier","asset":"images/usamo.png","source":"Original about.html; invitation image"},{"year":"2026","title":"USACO Platinum","detail":"Promoted to Platinum","asset":"images/usaco-plat.png","source":"Original about.html; 2026 third contest result"},{"year":null,"title":"USA Physics Olympiad","detail":"Gold medal","source":"Original about.html; date not specified"}],
+ "rates":[{"subject":"Mathematics","detail":"AP Calculus and school mathematics","price":"$25 / hour"},{"subject":"Physics","detail":"AP Physics 1 and C: Mechanics","price":"$30 / hour"},{"subject":"F=ma preparation","detail":"Mechanics and competition problem solving","price":"$40 / hour"}]
+}

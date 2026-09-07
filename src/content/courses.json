@@ -1,0 +1,332 @@
+[
+  {
+    "id": "ap1",
+    "title": "AP Physics 1",
+    "topics": [
+      {
+        "name": "Kinematics",
+        "sub": [
+          "Position, velocity, and acceleration",
+          "Motion graphs",
+          "Projectile motion",
+          "Relative motion"
+        ]
+      },
+      {
+        "name": "Newton's Laws of Motion",
+        "sub": [
+          "Newton's 1st, 2nd, and 3rd laws",
+          "Free-body diagrams",
+          "Friction forces",
+          "Tension and normal force"
+        ]
+      },
+      {
+        "name": "Circular Motion and Gravitation",
+        "sub": [
+          "Centripetal acceleration",
+          "Uniform circular motion",
+          "Newton's law of gravitation",
+          "Orbital mechanics"
+        ]
+      },
+      {
+        "name": "Energy",
+        "sub": [
+          "Work and kinetic energy",
+          "Potential energy",
+          "Conservation of energy",
+          "Power"
+        ]
+      },
+      {
+        "name": "Momentum",
+        "sub": [
+          "Linear momentum and impulse",
+          "Conservation of momentum",
+          "Elastic and inelastic collisions",
+          "Center of mass"
+        ]
+      },
+      {
+        "name": "Simple Harmonic Motion",
+        "sub": [
+          "Springs and Hooke's law",
+          "Pendulums",
+          "Period and frequency",
+          "Energy in SHM"
+        ]
+      },
+      {
+        "name": "Torque and Rotational Motion",
+        "sub": [
+          "Torque and rotational equilibrium",
+          "Rotational kinematics",
+          "Moment of inertia",
+          "Angular momentum"
+        ]
+      },
+      {
+        "name": "Electric Charge and Electric Force",
+        "sub": [
+          "Charge properties",
+          "Coulomb's law",
+          "Electric fields",
+          "Conductors and insulators"
+        ]
+      },
+      {
+        "name": "DC Circuits",
+        "sub": [
+          "Current and resistance",
+          "Ohm's law",
+          "Series and parallel circuits",
+          "Kirchhoff's laws"
+        ]
+      },
+      {
+        "name": "Mechanical Waves and Sound",
+        "sub": [
+          "Wave properties",
+          "Superposition and interference",
+          "Standing waves",
+          "Sound and Doppler effect"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ap2",
+    "title": "AP Physics 2",
+    "topics": [
+      {
+        "name": "Fluids",
+        "sub": [
+          "Density and pressure",
+          "Pascal's principle",
+          "Buoyancy and Archimedes' principle",
+          "Fluid flow and Bernoulli's equation"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "sub": [
+          "Temperature and thermal equilibrium",
+          "Heat and the first law",
+          "Ideal gas law",
+          "Second law and entropy"
+        ]
+      },
+      {
+        "name": "Electric Force, Field, and Potential",
+        "sub": [
+          "Electric field lines",
+          "Electric potential energy",
+          "Electric potential",
+          "Capacitance"
+        ]
+      },
+      {
+        "name": "Electric Circuits",
+        "sub": [
+          "Capacitors in circuits",
+          "RC circuits",
+          "Resistivity",
+          "Ohmic vs non-ohmic behavior"
+        ]
+      },
+      {
+        "name": "Magnetism and Electromagnetic Induction",
+        "sub": [
+          "Magnetic fields and forces",
+          "Biot-Savart and Ampere's law",
+          "Faraday's law",
+          "Lenz's law and inductors"
+        ]
+      },
+      {
+        "name": "Geometric and Physical Optics",
+        "sub": [
+          "Reflection and refraction",
+          "Snell's law",
+          "Lenses and mirrors",
+          "Diffraction and interference"
+        ]
+      },
+      {
+        "name": "Quantum, Atomic, and Nuclear Physics",
+        "sub": [
+          "Photoelectric effect",
+          "Wave-particle duality",
+          "Bohr model",
+          "Radioactive decay"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "apc",
+    "title": "AP Physics C: Mechanics",
+    "topics": [
+      {
+        "name": "Advanced Kinematics",
+        "sub": [
+          "Derivatives of position functions",
+          "Integration for displacement and velocity",
+          "Acceleration as second derivative",
+          "Two-dimensional motion with calculus"
+        ]
+      },
+      {
+        "name": "Advanced Newton's Laws",
+        "sub": [
+          "Variable force problems",
+          "Constraint equations",
+          "Systems of particles",
+          "Non-inertial reference frames"
+        ]
+      },
+      {
+        "name": "Advanced Work, Energy, and Power",
+        "sub": [
+          "Work done by variable forces",
+          "Work-energy theorem",
+          "Conservative and non-conservative forces",
+          "Potential energy functions"
+        ]
+      },
+      {
+        "name": "Advanced Momentum",
+        "sub": [
+          "Center of mass calculations",
+          "Impulse-momentum theorem",
+          "Rocket propulsion",
+          "Two-dimensional collision analysis"
+        ]
+      },
+      {
+        "name": "Advanced Rotation",
+        "sub": [
+          "Angular kinematics with calculus",
+          "Torque and angular momentum",
+          "Rotational inertia by integration",
+          "Parallel and perpendicular axis theorems"
+        ]
+      },
+      {
+        "name": "Advanced Oscillations",
+        "sub": [
+          "Differential equations of SHM",
+          "Damped oscillations",
+          "Driven oscillations and resonance",
+          "Phase space analysis"
+        ]
+      },
+      {
+        "name": "Advanced Gravitation",
+        "sub": [
+          "Gravitational potential energy",
+          "Escape velocity",
+          "Kepler's laws",
+          "Orbital energy and bound states"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fma",
+    "title": "F=ma preparation",
+    "topics": [
+      {
+        "name": "Advanced Mechanics Foundations",
+        "sub": [
+          "Units and dimensional analysis",
+          "Vectors and components",
+          "Free-body diagram speed",
+          "Approximation and scaling"
+        ]
+      },
+      {
+        "name": "Advanced Kinematics",
+        "sub": [
+          "One-dimensional motion",
+          "Two-dimensional motion",
+          "Projectile motion",
+          "Relative motion"
+        ]
+      },
+      {
+        "name": "Advanced Forces and Newton's Laws",
+        "sub": [
+          "Static and kinetic friction",
+          "Tension and pulleys",
+          "Inclines",
+          "Multiple-body systems"
+        ]
+      },
+      {
+        "name": "Advanced Circular Motion",
+        "sub": [
+          "Centripetal acceleration",
+          "Banked curves",
+          "Vertical circles",
+          "Non-uniform circular motion"
+        ]
+      },
+      {
+        "name": "Advanced Work and Energy",
+        "sub": [
+          "Work-energy theorem",
+          "Conservative forces",
+          "Energy conservation",
+          "Power"
+        ]
+      },
+      {
+        "name": "Advanced Momentum and Collisions",
+        "sub": [
+          "Impulse",
+          "Conservation of momentum",
+          "Elastic collisions",
+          "Center of mass"
+        ]
+      },
+      {
+        "name": "Advanced Rotation",
+        "sub": [
+          "Torque",
+          "Rotational equilibrium",
+          "Moment of inertia",
+          "Angular momentum"
+        ]
+      },
+      {
+        "name": "Advanced Oscillations",
+        "sub": [
+          "Spring-mass systems",
+          "Pendulums",
+          "Period and frequency",
+          "Energy in SHM"
+        ]
+      },
+      {
+        "name": "Advanced Gravitation",
+        "sub": [
+          "Newton's law of gravitation",
+          "Orbits",
+          "Escape speed",
+          "Kepler-style reasoning"
+        ]
+      },
+      {
+        "name": "Past Tests and Handouts",
+        "sub": [
+          "Go over past F=ma tests",
+          "Target weak areas by question type",
+          "Review custom handouts",
+          "Build timed-test strategy"
+        ]
+      }
+    ]
+  }
+]
