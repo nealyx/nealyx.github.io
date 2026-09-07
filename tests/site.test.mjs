@@ -27,5 +27,5 @@ test('pages have semantic and sharing metadata; content stays available without 
  }
  const home=await readFile(new URL('index.html',root),'utf8');
  for(const id of ['work','problems','milestones','notes','teaching','about','contact'])assert.ok(home.includes(`id="${id}"`));
- assert.equal([...home.matchAll(/class="graph-edge"/g)].length,15);
+ assert.ok(home.includes('src="/assets/hero-canvas.js"'));
 });

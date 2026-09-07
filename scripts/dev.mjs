@@ -8,7 +8,9 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const build=()=>execFileSync(process.execPath,[path.join(root,'scripts/build.mjs')],{stdio:'inherit'});
 build();
 let timer;
-watch(path.join(root,'src'),{recursive:true},()=>{clearTimeout(timer);timer=setTimeout(()=>{try{build()}catch(e){console.error('Build failed')}},150)});
-watch(path.join(root,'scripts/build.mjs'),()=>{clearTimeout(timer);timer=setTimeout(()=>{try{build()}catch(e){console.error('Build failed')}},150)});
+watch(root,{recursive:true},(_,file)=>{
+ if(!file || /^(dist|\.git|node_modules|src)(\/|$)/.test(file))return;
+ clearTimeout(timer);timer=setTimeout(()=>{try{build()}catch(e){console.error('Build failed')}},150);
+});
 const types={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.xml':'application/xml','.txt':'text/plain'};
 createServer(async(req,res)=>{try{let name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);let target=path.resolve(root,'dist','.'+name);if(!target.startsWith(path.join(root,'dist')+path.sep)&&target!==path.join(root,'dist'))throw Error();if((await stat(target)).isDirectory())target=path.join(target,'index.html');res.setHeader('Content-Type',types[path.extname(target)]||'application/octet-stream');res.setHeader('Cache-Control','no-store');res.end(await readFile(target));}catch{res.statusCode=404;res.end('Not found');}}).listen(4173,'127.0.0.1',()=>console.log('Local: http://127.0.0.1:4173'));
