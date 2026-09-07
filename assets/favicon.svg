@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="3" fill="#244ad8"/><path d="M11 30V10l18 20V10M11 10h18M11 30h18" stroke="#f5f3ec" fill="none" stroke-width="1.5"/><circle cx="11" cy="10" r="2.5" fill="#f5f3ec"/><circle cx="29" cy="30" r="2.5" fill="#f5f3ec"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <rect width="40" height="40" rx="5" fill="#f5f3ec"/>
+  <!-- K4 edges — navy -->
+  <line x1="20" y1="8"  x2="8"  y2="30" stroke="#1b2a4a" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="20" y1="8"  x2="32" y2="30" stroke="#1b2a4a" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="20" y1="8"  x2="20" y2="21" stroke="#1b2a4a" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="8"  y1="30" x2="32" y2="30" stroke="#1b2a4a" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="8"  y1="30" x2="20" y2="21" stroke="#1b2a4a" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Rust accent edge -->
+  <line x1="20" y1="21" x2="32" y2="30" stroke="#a95738" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Nodes -->
+  <circle cx="20" cy="8"  r="2.8" fill="#1b2a4a"/>
+  <circle cx="8"  cy="30" r="2.8" fill="#1b2a4a"/>
+  <circle cx="32" cy="30" r="2.8" fill="#1b2a4a"/>
+  <circle cx="20" cy="21" r="2.8" fill="#1b2a4a"/>
+</svg>
