@@ -1,0 +1,240 @@
+/* One continuous night palette. Detail pages retain their separate reading theme. */
+.dark-space-theme {
+  --ink: #edf1f5;
+  --muted: #a2adbb;
+  --line: #ffffff24;
+  --blue: #b1c6ef;
+  --rust: #d6a886;
+  --content-width: 1140px;
+}
+.dark-space-theme p { color: #b8c1cd; }
+.dark-space-theme .eyebrow {
+  color: #a1b0c5;
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+.dark-space-theme .section,
+.dark-space-theme .teaching-inner {
+  width: calc(100% - 112px);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 104px 0;
+  scroll-margin-top: 0;
+}
+.dark-space-theme .section + .section,
+.dark-space-theme .teaching-section {
+  border-top: 1px solid var(--line);
+}
+.dark-space-theme .section-heading {
+  margin-bottom: 48px;
+  align-items: flex-end;
+}
+.dark-space-theme .section-heading h2,
+.dark-space-theme .teaching-section h2,
+.dark-space-theme .about-section h2 {
+  font: 400 clamp(40px, 4.3vw, 60px)/1.08 var(--serif);
+  letter-spacing: -.025em;
+  margin-top: 20px;
+}
+.dark-space-theme .section-heading > p {
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 280px;
+}
+.dark-space-theme .section h2 em,
+.dark-space-theme .teaching-section h2 em { color: var(--blue); }
+.dark-space-theme .text-link {
+  color: var(--ink);
+  border-color: #ffffff40;
+  min-height: 44px;
+}
+.dark-space-theme .text-link:hover { color: var(--blue); border-color: var(--blue); }
+
+/* Selected work: diagrams belong to the same palette as the page. */
+.dark-space-theme .project-visual {
+  --blue: #b1c6ef;
+  background-color: #0c141f;
+  border: 1px solid #ffffff14;
+  height: 200px;
+  transition: border-color .25s, background-color .25s;
+}
+.dark-space-theme .visual-0 {
+  background-image: radial-gradient(#ffffff20 .65px, transparent .65px);
+  background-size: 18px 18px;
+}
+.dark-space-theme .visual-1 { background-image: none; }
+.dark-space-theme .visual-1 .axis { stroke: #637087; }
+.dark-space-theme .visual-1 .prediction { stroke: var(--rust); }
+.dark-space-theme .visual-caption { color: #8f9daf; font-size: 9px; }
+.dark-space-theme .visual-2 { background-image: none; }
+.dark-space-theme .book-equation { color: #d8e1ef; }
+.dark-space-theme .work-link:hover .project-visual { border-color: #b1c6ef60; background-color: #101d2c; }
+.dark-space-theme .work-grid { gap: 28px; }
+.dark-space-theme .work-item h3 { font-size: 29px; line-height: 1.18; }
+.dark-space-theme .work-meta { color: #a2adbb; font-size: 10px; }
+.dark-space-theme .project-context { color: #96a2b3; }
+
+/* Questions form a single editorial list; native disclosures remain accessible. */
+.dark-space-theme .problems-section { background: transparent; color: var(--ink); }
+.dark-space-theme .question-list { border-color: var(--line); }
+.dark-space-theme .question-list > details { border-color: var(--line); }
+.dark-space-theme .question-list summary {
+  grid-template-columns: 34px 1fr 130px 24px;
+  gap: 20px;
+  padding: 30px 0;
+}
+.dark-space-theme .question-list h3 { font-size: clamp(25px, 2.7vw, 36px); }
+.dark-space-theme .question-number { color: #8f9daf; margin-top: 7px; }
+.dark-space-theme .question-field {
+  font: 10px/1.5 var(--mono);
+  color: #9faec2;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  text-align: right;
+}
+.dark-space-theme .question-list .expand { color: var(--blue); font-size: 22px; }
+.dark-space-theme .question-list summary:hover { color: var(--blue); }
+.dark-space-theme .question-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  align-items: center;
+  gap: 80px;
+  padding: 0 44px 42px 54px;
+}
+.dark-space-theme .question-explanation { max-width: 610px; }
+.dark-space-theme .question-body p { color: #b8c1cd; font-size: 15px; line-height: 1.85; }
+.dark-space-theme .question-body p + p { margin-top: 16px; }
+.dark-space-theme .question-body .text-link { margin-top: 16px; }
+.problem-figure { text-align: center; }
+.problem-figure svg { display: block; width: 190px; margin: 0 auto; overflow: visible; }
+.proof-edge { fill: none; stroke: #d6a886; stroke-width: .8; opacity: .4; }
+.proof-triangle { fill: none; stroke: #c7dbff; stroke-width: 1.7; }
+.problem-figure circle { fill: #c7dbff; stroke: #03070c; stroke-width: 2; }
+.problem-figure figcaption { color: #99a7ba; font: 10px/1.5 var(--mono); margin-top: 10px; }
+.problem-equation { font: 28px/1.2 var(--serif); color: #9faec2; }
+.problem-equation span, .problem-equation em { display: block; }
+.problem-equation em { margin-top: 12px; color: var(--blue); }
+
+/* Milestones: consistent year / description / evidence columns at every width. */
+.dark-space-theme .milestones-section {
+  display: grid;
+  grid-template-columns: .72fr 1.28fr;
+  gap: 80px;
+}
+.dark-space-theme .milestones-section .section-heading { display: block; margin: 0; }
+.dark-space-theme .milestones-section .section-heading > p { margin-top: 25px; }
+.dark-space-theme .milestone-list { border-top: 0; }
+.dark-space-theme .milestone {
+  grid-template-columns: 48px minmax(0, 1fr) 44px;
+  gap: 22px;
+  padding: 23px 0;
+  min-height: 100px;
+}
+.dark-space-theme .milestone:first-child { padding-top: 0; min-height: 78px; }
+.dark-space-theme .milestone:last-child { border-bottom: 0; padding-bottom: 0; }
+.dark-space-theme .milestone > .mono { grid-column: 1; grid-row: 1; font-size: 11px; align-self: start; padding-top: 5px; }
+.dark-space-theme .milestone-description { grid-column: 2; grid-row: 1; }
+.dark-space-theme .milestone h3 { font: 500 16px/1.45 var(--sans); }
+.dark-space-theme .milestone p { font-size: 12px; line-height: 1.65; margin-top: 5px; color: #a2adbb; }
+.dark-space-theme .milestone > a {
+  grid-column: 3;
+  grid-row: 1;
+  width: 44px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  color: #b1c6ef;
+  font-size: 20px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  transition: background .2s, border-color .2s;
+}
+.dark-space-theme .milestone > a:hover { background: #ffffff08; border-color: var(--line); }
+
+/* Teaching and about share a quiet two-column rhythm. */
+.dark-space-theme .teaching-section { border-bottom: 0; background: transparent; }
+.dark-space-theme .teaching-inner,
+.dark-space-theme .about-section { grid-template-columns: 1fr 1fr; gap: 96px; }
+.dark-space-theme .teaching-copy > p { max-width: none; font-size: 15px; line-height: 1.85; }
+.dark-space-theme .subject-list { margin-top: 32px; }
+.dark-space-theme .subject-list li { padding: 15px 0; font-size: 13px; }
+.dark-space-theme .subject-list li:last-child { border-bottom: 1px solid var(--line); }
+.dark-space-theme .about-section { border-top: 1px solid var(--line); }
+.dark-space-theme .about-copy .about-lead {
+  font: 30px/1.35 var(--serif);
+  color: #e4eaf3;
+  margin-bottom: 24px;
+}
+.dark-space-theme .about-copy > p { max-width: none; font-size: 15px; line-height: 1.85; }
+.dark-space-theme .location { color: #9aa7b9; font-size: 9px; letter-spacing: .08em; }
+.dark-space-theme .location span { color: var(--blue); margin-right: 6px; }
+.dark-space-theme .interest-line { margin-top: 32px; padding-top: 24px; }
+.dark-space-theme .interest-line p { font-size: 13px; }
+
+/* A generous closing invitation; useful links have full-size touch targets. */
+.dark-space-theme .contact-section { text-align: center; padding-top: 96px; padding-bottom: 96px; }
+.dark-space-theme .contact-section h2 { font-size: clamp(56px, 7.5vw, 104px); margin-top: 24px; }
+.dark-space-theme .contact-bottom { flex-direction: column; gap: 32px; margin-top: 32px; }
+.dark-space-theme .email-link { font-size: 18px; padding: 10px 0; border-color: #ffffff40; }
+.dark-space-theme .social-links { gap: 16px; }
+.dark-space-theme .social-links a {
+  width: 44px;
+  height: 44px;
+  opacity: .85;
+  border-radius: 50%;
+  background: #ffffff05;
+  border: 1px solid #ffffff14;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.dark-space-theme .social-links a:hover { background: #ffffff0d; border-color: #ffffff40; opacity: 1; transform: translateY(-2px); }
+.dark-space-theme .site-footer {
+  width: calc(100% - 112px);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 28px 0 36px;
+  color: #9aa7b9;
+  font-size: 11px;
+}
+.dark-space-theme .site-footer a:last-child { margin-right: 50px; }
+
+@media (max-width: 1000px) {
+  .dark-space-theme .section, .dark-space-theme .teaching-inner, .dark-space-theme .site-footer { width: calc(100% - 64px); }
+  .dark-space-theme .milestones-section { gap: 40px; grid-template-columns: .8fr 1.2fr; }
+  .dark-space-theme .teaching-inner, .dark-space-theme .about-section { gap: 48px; }
+  .dark-space-theme .question-body { gap: 35px; grid-template-columns: 1fr 190px; }
+  .dark-space-theme .question-list summary { grid-template-columns: 28px 1fr 105px 22px; gap: 14px; }
+  .dark-space-theme .work-grid { gap: 20px; }
+  .dark-space-theme .work-item h3 { font-size: 25px; }
+}
+@media (max-width: 700px) {
+  .dark-space-theme .section, .dark-space-theme .teaching-inner, .dark-space-theme .site-footer { width: calc(100% - 40px); }
+  .dark-space-theme .section, .dark-space-theme .teaching-inner { padding: 68px 0; }
+  .dark-space-theme .section-heading { margin-bottom: 32px; }
+  .dark-space-theme .section-heading h2, .dark-space-theme .teaching-section h2, .dark-space-theme .about-section h2 { font-size: clamp(38px, 10vw, 48px); margin-top: 16px; }
+  .dark-space-theme .section-heading > p { margin-top: 20px; }
+  .dark-space-theme .work-grid { gap: 36px; }
+  .dark-space-theme .work-item { padding-bottom: 0; border-bottom: 0; }
+  .dark-space-theme .work-item h3 { font-size: 30px; }
+  .dark-space-theme .work-item p { font-size: 15px; }
+  .dark-space-theme .question-list summary { grid-template-columns: 22px 1fr 22px; gap: 12px; padding: 24px 0; }
+  .dark-space-theme .question-list h3 { font-size: 28px; line-height: 1.16; }
+  .dark-space-theme .question-field { display: none; }
+  .dark-space-theme .question-body { grid-template-columns: 1fr; gap: 28px; padding: 0 0 32px 34px; }
+  .dark-space-theme .question-body p { font-size: 14px; }
+  .problem-figure svg { width: 168px; }
+  .problem-equation { padding: 12px 0; }
+  .dark-space-theme .milestones-section, .dark-space-theme .teaching-inner, .dark-space-theme .about-section { grid-template-columns: 1fr; gap: 36px; }
+  .dark-space-theme .milestones-section h2 br { display: none; }
+  .dark-space-theme .milestones-section .section-heading > p { margin-top: 20px; }
+  .dark-space-theme .milestone { gap: 12px; grid-template-columns: 40px minmax(0, 1fr) 44px; padding: 20px 0; }
+  .dark-space-theme .milestone h3 { font-size: 15px; }
+  .dark-space-theme .milestone .mono { font-size: 10px; }
+  .dark-space-theme .about-copy .about-lead { font-size: 28px; line-height: 1.35; }
+  .dark-space-theme .contact-section h2 { font-size: clamp(50px, 12vw, 76px); }
+  .dark-space-theme .contact-section h2 em { display: block; }
+  .dark-space-theme .email-link { font-size: clamp(14px, 4.3vw, 18px); }
+  .dark-space-theme .social-links { gap: 12px; }
+  .dark-space-theme .site-footer { padding: 24px 0 32px; gap: 18px; }
+  .dark-space-theme .site-footer > span { font-size: 10px; }
+  .dark-space-theme .site-footer a:last-child { margin-right: 44px; }
+}

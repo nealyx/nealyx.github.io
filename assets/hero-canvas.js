@@ -103,7 +103,7 @@ function init(hero) {
       if (px < -20 || px > width + 20 || py < -20 || py > height + 20) continue;
       const radius = clamp(p.size * point.depth, .25, 2.4);
       const margin = smooth(Math.abs(px - width / 2) / (width * .42));
-      const readingAlpha = mix(1, .18 + margin * .55, 1 - graphWeight);
+      const readingAlpha = mix(1, .1 + margin * .38, 1 - graphWeight);
       const twinkle = .9 + Math.sin(time * .65 + p.phase) * .1;
       const alpha = clamp(p.alpha * twinkle * fadeIn * readingAlpha * (p.dust ? .45 : 1));
       if (p.size > .9) {

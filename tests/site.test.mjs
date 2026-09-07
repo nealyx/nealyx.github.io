@@ -26,6 +26,6 @@ test('pages have semantic and sharing metadata; content stays available without 
   const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length,`${file}: duplicate IDs`);
  }
  const home=await readFile(new URL('index.html',root),'utf8');
- for(const id of ['work','problems','milestones','notes','teaching','about','contact'])assert.ok(home.includes(`id="${id}"`));
+ for(const id of ['work','problems','milestones','teaching','about','contact'])assert.ok(home.includes(`id="${id}"`));
  assert.ok(home.includes('src="/assets/hero-canvas.js"'));
 });

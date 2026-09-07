@@ -40,6 +40,7 @@ if(sections.length){
   function update(){
     let active='';
     for(const section of sections)if(section.getBoundingClientRect().top<=180)active=section.id;
+    if(window.scrollY + innerHeight >= document.documentElement.scrollHeight - 4)active=sections.at(-1).id;
     navLinks.forEach(link=>{const selected=link.hash===`#${active}`;if(selected)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')});
     queued=false;
   }

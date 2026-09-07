@@ -1803,70 +1803,6 @@ details[open]>summary .expand {
   color: var(--blue);
 }
 
-/* ── Scroll-reveal for sections ────────────────────────────────────── */
-.section,
-.work-section,
-.problems-section,
-.milestones-section,
-.notes-section,
-.teaching-section,
-.about-section,
-.contact-section {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
-              transform 0.7s cubic-bezier(0.22,1,0.36,1);
-}
-.section.in-view,
-.work-section.in-view,
-.problems-section.in-view,
-.milestones-section.in-view,
-.notes-section.in-view,
-.teaching-section.in-view,
-.about-section.in-view,
-.contact-section.in-view {
-  opacity: 1;
-  transform: none;
-}
-
-
-/* --- DARK MODE / SPACE BACKGROUND OVERRIDES --- */
-.dark-space-theme {
-  background: transparent !important;
-  color: #f5f3ec !important;
-}
-.dark-space-theme p, .dark-space-theme .muted, .dark-space-theme .eyebrow {
-  color: rgba(245, 243, 236, 0.75) !important;
-}
-.dark-space-theme .site-header {
-  background: #000000 !important;
-  color: #f5f3ec !important;
-  height: 60px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-}
-.dark-space-theme .site-header .wordmark svg line {
-  stroke: #f5f3ec !important;
-}
-.dark-space-theme .work-item, .dark-space-theme .teaching-inner, .dark-space-theme .problems-inner, .dark-space-theme .milestone, .dark-space-theme .contact-bottom {
-  background: transparent !important;
-  border-color: rgba(245, 243, 236, 0.15) !important;
-  color: #f5f3ec !important;
-  backdrop-filter: none !important;
-}
-/* Ensure the body and html are transparent so the canvas shows through */
-html, .dark-space-theme {
-  background: transparent !important;
-}
-.dark-space-theme .work-item p, .dark-space-theme .teaching-inner p, .dark-space-theme .problems-inner p {
-  color: rgba(245, 243, 236, 0.8) !important;
-}
-.dark-space-theme .text-link {
-  color: #f5f3ec !important;
-}
-.dark-space-theme h1, .dark-space-theme h2, .dark-space-theme h3, .dark-space-theme h4, .dark-space-theme h5, .dark-space-theme h6 {
-  color: #f5f3ec !important;
-}
-
 /* --- NEW HERO STYLES --- */
 .hero {
   position: relative !important;
@@ -1901,6 +1837,7 @@ html, .dark-space-theme {
   background: #03070c !important;
   --scrollbar-track: #03070c;
   --blue: #9db9ff;
+  color: #eef2f6;
 }
 .dark-space-theme .project-visual { --blue: #244ad8; }
 #hero-canvas {
@@ -1913,6 +1850,9 @@ html, .dark-space-theme {
 }
 .dark-space-theme .site-header {
   min-height: 60px;
+  height: 60px;
+  background: #000;
+  border-color: #ffffff1a;
   display: flex;
   padding-top: 0;
   padding-bottom: 0;
