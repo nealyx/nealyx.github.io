@@ -6,12 +6,11 @@
 
   var CFG = {
     bgColor:        '#040506', // deep space
-    nodeBright:     '#f5f3ec',
-    edgeColor:      '#f5f3ec',
-    accentColor:    '#a95738',
-    particleCount:  1500, 
+    nodeBright:     '#ffffff', // Pure white for brighter stars
+    accentColor:    '#f0643a', // Brighter rust for accent
+    particleCount:  2000,      // Increased particle count for denser shapes
     rotateSpeed:    0.00015,
-    parallaxDepth:  0.06,
+    parallaxDepth:  0.08,      // slightly more parallax
     dragSensitivity:0.006,
   };
 
@@ -19,13 +18,16 @@
   var yaw = 0, pitch = 0.35;
   var targetYaw = 0, targetPitch = 0.35;
   var dragging = false, lastX = 0, lastY = 0;
+  
+  // For "jelly" smooth parallax
   var mouseNX = 0, mouseNY = 0;
+  var targetMouseNX = 0, targetMouseNY = 0;
+  
   var scrollY = 0, maxScroll = 1;
   var lastTime = 0;
   var particles = [];
-  var loadProgress = 0; // 0 to 1 over first 2 seconds
+  var loadProgress = 0;
 
-  // K4 Tetrahedron Vertices (Radius ~1)
   var NODES = [
     [ 0,        1,       0      ],
     [ 0.9428,  -0.3333,  0      ],
@@ -52,8 +54,8 @@
     
     window.addEventListener('mousemove', function(e) {
       if (dragging) return;
-      mouseNX = (e.clientX / window.innerWidth  - 0.5) * 2;
-      mouseNY = (e.clientY / window.innerHeight - 0.5) * 2;
+      targetMouseNX = (e.clientX / window.innerWidth  - 0.5) * 2;
+      targetMouseNY = (e.clientY / window.innerHeight - 0.5) * 2;
     }, { passive: true });
     canvas.addEventListener('pointerdown', function(e) {
       dragging = true; lastX = e.clientX; lastY = e.clientY;
@@ -97,10 +99,10 @@
   function buildParticles() {
     particles = [];
     
-    // 1. Assign Pyramid Positions
-    var bgCount = Math.floor(CFG.particleCount * 0.4);
+    // Pyramid takes a larger percentage of particles now for more brightness
+    var bgCount = Math.floor(CFG.particleCount * 0.3);
     var shapeCount = CFG.particleCount - bgCount;
-    var nodeCount = Math.floor(shapeCount * 0.3);
+    var nodeCount = Math.floor(shapeCount * 0.35);
     var edgeCount = shapeCount - nodeCount;
     
     var pyramidPositions = [];
@@ -133,26 +135,22 @@
       }
     }
     
-    // Generate all particles
     for (var i = 0; i < pyramidPositions.length; i++) {
-      // 2. Space/Edge Positions (Left and right columns)
       var side = Math.random() > 0.5 ? 1 : -1;
-      var spaceX = side * (3.5 + Math.random() * 2.0); // push to edges
+      var spaceX = side * (3.5 + Math.random() * 2.0); 
       var spaceY = (Math.random() - 0.5) * 8.0;
       var spaceZ = (Math.random() - 0.5) * 4.0;
       var posSpace = [spaceX, spaceY, spaceZ];
       
-      // 3. Galaxy Positions (Spiral)
       var arm = Math.random() > 0.5 ? 0 : Math.PI;
       var dist = Math.random() * 3.0;
       var angle = dist * 2.5 + arm;
       var spread = 0.2 + (dist * 0.1);
       var gx = Math.cos(angle) * dist + (Math.random()-0.5)*spread;
       var gz = Math.sin(angle) * dist + (Math.random()-0.5)*spread;
-      var gy = (Math.random()-0.5) * 0.3; // flat disk
+      var gy = (Math.random()-0.5) * 0.3;
       var posGalaxy = [gx, gy, gz];
       
-      // Random starting point for the load animation
       var posStart = randomSpherePoint(6 + Math.random() * 6);
       
       particles.push({
@@ -161,8 +159,8 @@
         pSpace: posSpace,
         pGal: posGalaxy,
         isAccent: isAccents[i],
-        r: Math.random() * 1.5 + 0.5,
-        a: Math.random() * 0.5 + 0.2,
+        r: Math.random() * 1.5 + 0.6, // slightly bigger base size
+        a: Math.random() * 0.6 + 0.4, // much higher base alpha
         phase: Math.random() * Math.PI * 2,
         speed: Math.random() * 0.002 + 0.001,
         drift: [ (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2 ]
@@ -180,19 +178,20 @@
     var yr2 =  y * cosP - zr * sinP;
     var zr2 =  y * sinP + zr * cosP;
     var fov = 3.5, s = fov / (fov + zr2);
-    // Dynamic scale based on screen size so galaxy/pyramid fit
     var scale = Math.min(W, H) * 0.28;
     return [W / 2 + xr * s * scale, H / 2 + yr2 * s * scale, s];
   }
 
-  // Easing function
   function easeInOutQuad(t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
 
   function loop(now) {
     var dt = Math.min(now - lastTime, 50);
     lastTime = now;
 
-    // Load animation progress (0 to 1 over 2.5 seconds)
+    // Jelly smooth parallax interpolation
+    mouseNX += (targetMouseNX - mouseNX) * 0.015;
+    mouseNY += (targetMouseNY - mouseNY) * 0.015;
+
     if (loadProgress < 1) {
       loadProgress += dt / 2500;
       if (loadProgress > 1) loadProgress = 1;
@@ -209,66 +208,52 @@
   function draw(now) {
     ctx.clearRect(0, 0, W, H);
     
-    // Deep space gradient
     var bgGrd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H));
     bgGrd.addColorStop(0, '#0a0b0d');
     bgGrd.addColorStop(1, '#020202');
     ctx.fillStyle = bgGrd;
     ctx.fillRect(0, 0, W, H);
 
-    // Calculate stage progresses based on scrollY
-    var scrollRatio = scrollY / Math.max(maxScroll, 1000); // 0 at top, 1 at bottom
+    var scrollRatio = scrollY / Math.max(maxScroll, 1000); 
     
-    // T = 0.00 -> 0.15: Shift Pyramid angle
     var scrollPitchOffset = Math.min(scrollRatio / 0.15, 1) * 0.8;
     var activePitch = pitch + scrollPitchOffset;
     var activeYaw = yaw;
 
-    // T = 0.15 -> 0.35: Dissipate to Space
     var pSpace = Math.max(0, Math.min((scrollRatio - 0.15) / 0.20, 1));
     var wPyr = 1 - pSpace;
     var wSpace = pSpace;
     var wGal = 0;
 
-    // T = 0.70 -> 0.95: Space to Galaxy
     if (scrollRatio > 0.7) {
       var pGal = Math.max(0, Math.min((scrollRatio - 0.70) / 0.25, 1));
       wSpace = 1 - pGal;
       wGal = pGal;
-      
-      // Galaxy has its own tilt
       activePitch = activePitch * (1-pGal) + (-0.5) * pGal;
-      activeYaw = activeYaw * (1-pGal) + (now * 0.0002) * pGal; // gentle auto-spin for galaxy
+      activeYaw = activeYaw * (1-pGal) + (now * 0.0002) * pGal; 
     }
     
-    // Easing for smooth transitions
     wPyr = easeInOutQuad(wPyr);
     wSpace = easeInOutQuad(wSpace);
     wGal = easeInOutQuad(wGal);
-
     var loadEase = easeInOutQuad(loadProgress);
 
-    // Draw Particles
     for (var i = 0; i < particles.length; i++) {
       var p = particles[i];
       
-      // 1. Calculate base position blending all states
       var bx = p.pPyr[0] * wPyr + p.pSpace[0] * wSpace + p.pGal[0] * wGal;
       var by = p.pPyr[1] * wPyr + p.pSpace[1] * wSpace + p.pGal[1] * wGal;
       var bz = p.pPyr[2] * wPyr + p.pSpace[2] * wSpace + p.pGal[2] * wGal;
       
-      // 2. Blend with load animation start position
       var cx = p.pStart[0] * (1-loadEase) + bx * loadEase;
       var cy = p.pStart[1] * (1-loadEase) + by * loadEase;
       var cz = p.pStart[2] * (1-loadEase) + bz * loadEase;
 
-      // 3. Add continuous drift
       var driftAmt = Math.sin(now * p.speed + p.phase);
       cx += p.drift[0] * driftAmt;
       cy += p.drift[1] * driftAmt;
       cz += p.drift[2] * driftAmt;
       
-      // Tiny "breathing" noise when in rigid shapes (Pyramid or Galaxy)
       if ((wPyr > 0.8 || wGal > 0.8) && loadEase > 0.9) {
           cx += Math.sin(now * 0.001 + p.phase) * 0.02;
           cy += Math.cos(now * 0.0013 + p.phase) * 0.02;
@@ -284,42 +269,34 @@
       ctx.beginPath();
       ctx.arc(px, py, dotR, 0, Math.PI * 2);
       
-      // Color logic: Accent color only visible in Pyramid state
       if (p.isAccent && wPyr > 0.5) {
         ctx.fillStyle = CFG.accentColor;
         var pulse = (Math.sin(now * 0.003 + p.phase) + 1) * 0.5;
-        ctx.globalAlpha = (0.4 + pulse * 0.6);
+        ctx.globalAlpha = Math.min((0.6 + pulse * 0.4) * wPyr, 1); // Brighter accent
       } else {
-        // In galaxy state, add a slight warm/blue tint based on radius
         if (wGal > 0.5) {
           var distToCenter = Math.sqrt(p.pGal[0]*p.pGal[0] + p.pGal[2]*p.pGal[2]);
-          if (distToCenter < 1.0) ctx.fillStyle = '#ffeedd'; // core
-          else if (distToCenter < 2.0) ctx.fillStyle = '#f5f3ec';
-          else ctx.fillStyle = '#cceeff'; // outer arms
+          if (distToCenter < 1.0) ctx.fillStyle = '#ffeedd';
+          else if (distToCenter < 2.0) ctx.fillStyle = '#ffffff';
+          else ctx.fillStyle = '#cceeff';
+          ctx.globalAlpha = p.a * Math.min(sc, 1.5);
+        } else if (wPyr > 0.5) {
+          // Pyramid state: brighter, whiter particles
+          ctx.fillStyle = CFG.nodeBright;
+          ctx.globalAlpha = Math.min(p.a * 1.5 * sc * wPyr, 1); 
         } else {
           ctx.fillStyle = CFG.nodeBright;
+          ctx.globalAlpha = p.a * Math.min(sc, 1.5);
         }
-        ctx.globalAlpha = p.a * Math.min(sc, 1.5);
       }
       ctx.fill();
     }
-    
-    // Optional: Draw faint Pyramid lines ONLY when fully loaded and scroll=0
-    var lineOpacity = Math.max(0, 1 - (scrollRatio / 0.05)) * Math.max(0, (loadProgress - 0.8) / 0.2);
-    if (lineOpacity > 0.01) {
-       // We can just rely on the particles for the shape to match Astra exactly,
-       // but subtle connecting lines are nice. Let's skip the lines for a pure particle feel, 
-       // as requested ("stars that make up the pyramid").
-    }
-
-    ctx.globalAlpha = 1;
   }
 
   function injectStyles() {
     var style = document.createElement('style');
     style.textContent = [
-      '#hero-canvas { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; pointer-events:none; }', // canvas is behind everything, no pointer events so page works
-      // The hero section must catch pointer events for the mouse rotation to work!
+      '#hero-canvas { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; pointer-events:none; }',
       '.hero { pointer-events: auto; }', 
     ].join('\n');
     document.head.appendChild(style);
