@@ -1839,8 +1839,10 @@ details[open]>summary .expand {
   color: rgba(245, 243, 236, 0.75) !important;
 }
 .dark-space-theme .site-header {
-  background: transparent !important;
+  background: #000000 !important;
   color: #f5f3ec !important;
+  height: 60px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 .dark-space-theme .site-header .wordmark svg line {
   stroke: #f5f3ec !important;
