@@ -28,6 +28,7 @@ The build **only packages the existing public files into `dist/`**. It never reg
 - `phystutor.html`: tutoring details, topics, rates, and the existing Formspree inquiry form.
 - `assets/site.css`: shared styles and homepage space-theme styles.
 - `assets/home.css`: the homepage's continuous dark palette, section layouts, and mobile spacing.
+- `assets/research.css`: the Ramsey Lines project page and its document links.
 - `assets/site.js`: navigation and progressively enhanced interactions.
 - `assets/hero-canvas.js`: canvas rendering, pointer/keyboard controls, scroll morphing, and animation lifecycle.
 - `assets/hero-field.js`: seeded K4/star/galaxy geometry and projection math.
@@ -37,6 +38,8 @@ The `src/` directory retains data and assets from the earlier generated design f
 To add a page or note, create its HTML file (for example `notes/your-note/index.html`), add its link to the homepage, and add its canonical URL to `sitemap.xml`. The build copies the `notes/` directory when present. Keep descriptions, canonical URLs, and sharing metadata accurate. Do not invent achievements or publication links.
 
 The homepage shows six populated sections: Work, Problems, Milestones, Teaching, About, and Contact. Writing & Notes is omitted until there is published writing to link to. Navigation across all pages points to Teaching in its place. Section content remains visible without JavaScript.
+
+The Ramsey Lines page documents Neal's authorship of Chapters 8 and 10 and contributions to the Frankl–Wilson slides, as confirmed by Neal. The two source PDFs are preserved in `work/ramsey-theory/`; the bylines, dates, and scope come from those documents. The chapters present established mathematics and should not be described as new Ramsey bounds or a peer-reviewed publication. Replace the PDFs and version details together when updating the work.
 
 ## Animated background
 
