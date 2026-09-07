@@ -5,23 +5,19 @@
   'use strict';
 
   var CFG = {
-    bgColor:        '#040506', // deep space
-    nodeBright:     '#ffffff', // Pure white for brighter stars
-    accentColor:    '#f0643a', // Brighter rust for accent
-    particleCount:  2000,      // Increased particle count for denser shapes
+    bgColor:        '#000000', // Pure black space
+    nodeBright:     '#ffffff', 
+    accentColor:    '#f0643a', 
+    particleCount:  2000,      
     rotateSpeed:    0.00015,
-    parallaxDepth:  0.08,      // slightly more parallax
-    dragSensitivity:0.006,
   };
 
   var canvas, ctx, W, H, raf;
+  // Auto-rotation only, no mouse parallax
   var yaw = 0, pitch = 0.35;
-  var targetYaw = 0, targetPitch = 0.35;
-  var dragging = false, lastX = 0, lastY = 0;
   
-  // For "jelly" smooth parallax
-  var mouseNX = 0, mouseNY = 0;
-  var targetMouseNX = 0, targetMouseNY = 0;
+  // Localized jelly mouse interaction
+  var mouseX = -1000, mouseY = -1000;
   
   var scrollY = 0, maxScroll = 1;
   var lastTime = 0;
@@ -52,25 +48,20 @@
       maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
     }, { passive: true });
     
+    // Track mouse for local jelly physics
     window.addEventListener('mousemove', function(e) {
-      if (dragging) return;
-      targetMouseNX = (e.clientX / window.innerWidth  - 0.5) * 2;
-      targetMouseNY = (e.clientY / window.innerHeight - 0.5) * 2;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     }, { passive: true });
-    canvas.addEventListener('pointerdown', function(e) {
-      dragging = true; lastX = e.clientX; lastY = e.clientY;
-      canvas.style.cursor = 'grabbing';
-    });
-    window.addEventListener('pointermove', function(e) {
-      if (!dragging) return;
-      targetYaw   += (e.clientX - lastX) * CFG.dragSensitivity;
-      targetPitch += (e.clientY - lastY) * CFG.dragSensitivity;
-      targetPitch  = Math.max(-1.2, Math.min(1.2, targetPitch));
-      lastX = e.clientX; lastY = e.clientY;
+    
+    // Optional: when cursor leaves, put mouse out of bounds
+    window.addEventListener('mouseout', function(e) {
+      mouseX = -1000; mouseY = -1000;
     }, { passive: true });
-    window.addEventListener('pointerup', function() {
-      dragging = false; canvas.style.cursor = 'grab';
-    });
+    
+    // Just for cursor styling
+    canvas.addEventListener('pointerdown', function() { canvas.style.cursor = 'grabbing'; });
+    window.addEventListener('pointerup', function() { canvas.style.cursor = 'grab'; });
     
     scrollY = window.scrollY;
     maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
@@ -99,7 +90,6 @@
   function buildParticles() {
     particles = [];
     
-    // Pyramid takes a larger percentage of particles now for more brightness
     var bgCount = Math.floor(CFG.particleCount * 0.3);
     var shapeCount = CFG.particleCount - bgCount;
     var nodeCount = Math.floor(shapeCount * 0.35);
@@ -116,9 +106,7 @@
     var perNode = Math.floor(nodeCount / NODES.length);
     for (var n = 0; n < NODES.length; n++) {
       for (var i = 0; i < perNode; i++) {
-        var dx = (Math.random()-0.5)*0.15;
-        var dy = (Math.random()-0.5)*0.15;
-        var dz = (Math.random()-0.5)*0.15;
+        var dx = (Math.random()-0.5)*0.15, dy = (Math.random()-0.5)*0.15, dz = (Math.random()-0.5)*0.15;
         pyramidPositions.push([NODES[n][0]+dx, NODES[n][1]+dy, NODES[n][2]+dz]);
         isAccents.push(n===0 || n===1);
       }
@@ -159,22 +147,23 @@
         pSpace: posSpace,
         pGal: posGalaxy,
         isAccent: isAccents[i],
-        r: Math.random() * 1.5 + 0.6, // slightly bigger base size
-        a: Math.random() * 0.6 + 0.4, // much higher base alpha
+        r: Math.random() * 1.5 + 0.6,
+        a: Math.random() * 0.6 + 0.4,
         phase: Math.random() * Math.PI * 2,
         speed: Math.random() * 0.002 + 0.001,
-        drift: [ (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2 ]
+        drift: [ (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2 ],
+        // Jelly physics state
+        jOff: [0,0,0],
+        jVel: [0,0,0]
       });
     }
   }
 
   function project(x, y, z, activePitch, activeYaw) {
-    var py = activeYaw   + mouseNX * CFG.parallaxDepth;
-    var pp = activePitch + mouseNY * CFG.parallaxDepth;
-    var cosY = Math.cos(py), sinY = Math.sin(py);
+    var cosY = Math.cos(activeYaw), sinY = Math.sin(activeYaw);
     var xr =  x * cosY + z * sinY;
     var zr = -x * sinY + z * cosY;
-    var cosP = Math.cos(pp), sinP = Math.sin(pp);
+    var cosP = Math.cos(activePitch), sinP = Math.sin(activePitch);
     var yr2 =  y * cosP - zr * sinP;
     var zr2 =  y * sinP + zr * cosP;
     var fov = 3.5, s = fov / (fov + zr2);
@@ -188,37 +177,36 @@
     var dt = Math.min(now - lastTime, 50);
     lastTime = now;
 
-    // Jelly smooth parallax interpolation
-    mouseNX += (targetMouseNX - mouseNX) * 0.015;
-    mouseNY += (targetMouseNY - mouseNY) * 0.015;
-
     if (loadProgress < 1) {
       loadProgress += dt / 2500;
       if (loadProgress > 1) loadProgress = 1;
     }
 
-    targetYaw += CFG.rotateSpeed * dt;
-    yaw   += (targetYaw   - yaw)   * 0.06;
-    pitch += (targetPitch - pitch) * 0.06;
+    yaw += CFG.rotateSpeed * dt;
+    
+    // Constant base pitch for the pyramid, since scroll will change it
+    var basePitch = 0.35;
 
-    draw(now);
+    draw(now, basePitch, yaw, dt);
     raf = requestAnimationFrame(loop);
   }
 
-  function draw(now) {
+  function draw(now, activePitch, activeYaw, dt) {
     ctx.clearRect(0, 0, W, H);
     
+    // The user requested NO grey, so we use pure black and very faint gradient
     var bgGrd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H));
-    bgGrd.addColorStop(0, '#0a0b0d');
-    bgGrd.addColorStop(1, '#020202');
+    bgGrd.addColorStop(0, '#040506');
+    bgGrd.addColorStop(1, '#000000');
     ctx.fillStyle = bgGrd;
     ctx.fillRect(0, 0, W, H);
 
     var scrollRatio = scrollY / Math.max(maxScroll, 1000); 
     
+    // Rotation is now driven strictly by scroll, not mouse
     var scrollPitchOffset = Math.min(scrollRatio / 0.15, 1) * 0.8;
-    var activePitch = pitch + scrollPitchOffset;
-    var activeYaw = yaw;
+    var currentPitch = activePitch + scrollPitchOffset;
+    var currentYaw = activeYaw;
 
     var pSpace = Math.max(0, Math.min((scrollRatio - 0.15) / 0.20, 1));
     var wPyr = 1 - pSpace;
@@ -229,8 +217,8 @@
       var pGal = Math.max(0, Math.min((scrollRatio - 0.70) / 0.25, 1));
       wSpace = 1 - pGal;
       wGal = pGal;
-      activePitch = activePitch * (1-pGal) + (-0.5) * pGal;
-      activeYaw = activeYaw * (1-pGal) + (now * 0.0002) * pGal; 
+      currentPitch = currentPitch * (1-pGal) + (-0.5) * pGal;
+      currentYaw = currentYaw * (1-pGal) + (now * 0.0002) * pGal; 
     }
     
     wPyr = easeInOutQuad(wPyr);
@@ -260,7 +248,46 @@
           cz += Math.sin(now * 0.0017 + p.phase) * 0.02;
       }
 
-      var proj = project(cx, cy, cz, activePitch, activeYaw);
+      // First project without jelly offset to find 2D position for mouse hit detection
+      var projRaw = project(cx, cy, cz, currentPitch, currentYaw);
+      var rPx = projRaw[0], rPy = projRaw[1];
+      
+      // Calculate mouse repulsion (Jelly effect)
+      var dx = rPx - mouseX;
+      var dy = rPy - mouseY;
+      var distSq = dx*dx + dy*dy;
+      var hoverRadius = 150;
+      
+      if (distSq < hoverRadius*hoverRadius) {
+        var dist = Math.sqrt(distSq);
+        var force = (hoverRadius - dist) / hoverRadius;
+        // Push particle in 3D based on 2D screen direction
+        // Inverting the projection is complex, so we approximate a push on X/Y axis
+        p.jVel[0] += (dx / dist) * force * 0.012;
+        p.jVel[1] += (dy / dist) * force * 0.012;
+        p.jVel[2] += (Math.random() - 0.5) * force * 0.01; // subtle Z push
+      }
+      
+      // Spring physics back to 0
+      p.jVel[0] += -p.jOff[0] * 0.03; // stiffness
+      p.jVel[1] += -p.jOff[1] * 0.03;
+      p.jVel[2] += -p.jOff[2] * 0.03;
+      
+      p.jVel[0] *= 0.88; // damping/friction
+      p.jVel[1] *= 0.88;
+      p.jVel[2] *= 0.88;
+      
+      p.jOff[0] += p.jVel[0];
+      p.jOff[1] += p.jVel[1];
+      p.jOff[2] += p.jVel[2];
+
+      // Add jelly offset to actual position
+      cx += p.jOff[0];
+      cy += p.jOff[1];
+      cz += p.jOff[2];
+
+      // Final projection with jelly offsets
+      var proj = project(cx, cy, cz, currentPitch, currentYaw);
       var px = proj[0], py = proj[1], sc = proj[2];
       
       var dotR = p.r * sc;
@@ -272,7 +299,7 @@
       if (p.isAccent && wPyr > 0.5) {
         ctx.fillStyle = CFG.accentColor;
         var pulse = (Math.sin(now * 0.003 + p.phase) + 1) * 0.5;
-        ctx.globalAlpha = Math.min((0.6 + pulse * 0.4) * wPyr, 1); // Brighter accent
+        ctx.globalAlpha = Math.min((0.6 + pulse * 0.4) * wPyr, 1);
       } else {
         if (wGal > 0.5) {
           var distToCenter = Math.sqrt(p.pGal[0]*p.pGal[0] + p.pGal[2]*p.pGal[2]);
@@ -281,7 +308,6 @@
           else ctx.fillStyle = '#cceeff';
           ctx.globalAlpha = p.a * Math.min(sc, 1.5);
         } else if (wPyr > 0.5) {
-          // Pyramid state: brighter, whiter particles
           ctx.fillStyle = CFG.nodeBright;
           ctx.globalAlpha = Math.min(p.a * 1.5 * sc * wPyr, 1); 
         } else {
@@ -297,7 +323,11 @@
     var style = document.createElement('style');
     style.textContent = [
       '#hero-canvas { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; pointer-events:none; }',
-      '.hero { pointer-events: auto; }', 
+      // We need the body/html to NOT catch the cursor so the cursor can be styled,
+      // but canvas must not block clicks on actual page links.
+      // So we apply cursor: grab to the hero section which covers the top area.
+      '.hero { cursor: grab; }',
+      '.hero:active { cursor: grabbing; }'
     ].join('\n');
     document.head.appendChild(style);
   }

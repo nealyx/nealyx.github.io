@@ -1846,10 +1846,14 @@ p, .muted, .eyebrow {
   stroke: #f5f3ec !important;
 }
 .work-item, .teaching-inner, .problems-inner, .milestone, .contact-bottom {
-  background: rgba(13, 14, 11, 0.6) !important;
+  background: transparent !important;
   border-color: rgba(245, 243, 236, 0.15) !important;
   color: #f5f3ec !important;
-  backdrop-filter: blur(12px) !important;
+  backdrop-filter: none !important;
+}
+/* Ensure the body and html have completely black/transparent backgrounds so no grey shows */
+html, body {
+  background-color: #000000 !important;
 }
 .work-item p, .teaching-inner p, .problems-inner p {
   color: rgba(245, 243, 236, 0.8) !important;
