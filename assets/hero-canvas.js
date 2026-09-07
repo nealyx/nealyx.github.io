@@ -1,7 +1,7 @@
 import { clamp, smooth, mix, createStars, stages, project } from './hero-field.js';
 
 const hero = document.querySelector('.dark-space-theme .hero');
-if (hero) init(hero);
+if (hero || document.body.classList.contains('space-page')) init(hero);
 
 function init(hero) {
   const canvas = document.createElement('canvas');
@@ -13,7 +13,7 @@ function init(hero) {
   const surface = document.createElement('button');
   surface.type = 'button'; surface.className = 'hero-interaction';
   surface.setAttribute('aria-label', 'Rotate the K4 star field. Drag or use arrow keys; Home resets the view.');
-  hero.prepend(surface);
+  if (hero) hero.prepend(surface);
   const pause = document.createElement('button');
   pause.type = 'button'; pause.className = 'motion-toggle';
   pause.innerHTML = '<span aria-hidden="true">Ⅱ</span>';
@@ -45,11 +45,11 @@ function init(hero) {
     const dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    heroHeight = hero.offsetHeight;
-    centerY = hero.offsetTop + heroHeight * (width < 700 ? .43 : .5);
+    heroHeight = hero?.offsetHeight || height;
+    centerY = hero ? hero.offsetTop + heroHeight * (width < 700 ? .43 : .5) : height / 2;
     scale = Math.min(width * (width < 700 ? .4 : .245), height * .36);
     maxScroll = Math.max(1, document.documentElement.scrollHeight - height);
-    const count = width < 700 ? 1150 : 2200;
+    const count = hero ? (width < 700 ? 1150 : 2200) : (width < 700 ? 500 : 950);
     if (!stars || stars.length !== count) stars = createStars(count);
     backdrop = ctx.createRadialGradient(width * .5, height * .45, 0, width * .5, height * .45, Math.max(width, height) * .7);
     backdrop.addColorStop(0, '#04080d'); backdrop.addColorStop(.55, '#050b11'); backdrop.addColorStop(1, '#000000');
@@ -74,7 +74,7 @@ function init(hero) {
     // Reset opacity before clearing: inherited particle alpha previously left trails.
     ctx.globalAlpha = 1;
     ctx.fillStyle = backdrop; ctx.fillRect(0, 0, width, height);
-    const [graphWeight, spaceWeight, galaxyWeight] = stages(scroll, heroHeight, maxScroll);
+    const [graphWeight, spaceWeight, galaxyWeight] = hero ? stages(scroll, heroHeight, maxScroll) : [0, 1, 0];
     const cy = mix(centerY, height * .5, 1 - graphWeight);
     const angleY = yaw + dragYaw, angleX = mix(.25 + dragPitch, -.75, galaxyWeight);
     const sy = Math.sin(angleY), coY = Math.cos(angleY), sx = Math.sin(angleX), coX = Math.cos(angleX);
@@ -117,10 +117,12 @@ function init(hero) {
     ctx.globalAlpha = 1;
   }
   function updatePause() {
-    pause.setAttribute('aria-label', paused ? 'Resume background animation' : 'Pause background animation');
+    pause.setAttribute('aria-label', paused ? 'Resume animations' : 'Pause animations');
     pause.setAttribute('aria-pressed', String(paused));
     pause.title = paused ? 'Resume animation' : 'Pause animation';
     pause.firstElementChild.textContent = paused ? '▷' : 'Ⅱ';
+    document.documentElement.dataset.motionPaused = String(paused);
+    document.dispatchEvent(new CustomEvent('site-motion-change', { detail: { paused } }));
     last = 0; requestDraw();
   }
   pause.addEventListener('click', () => { paused = !paused; updatePause(); });

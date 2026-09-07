@@ -29,6 +29,9 @@ The build **only packages the existing public files into `dist/`**. It never reg
 - `assets/site.css`: shared styles and homepage space-theme styles.
 - `assets/home.css`: the homepage's continuous dark palette, section layouts, and mobile spacing.
 - `assets/research.css`: the Ramsey Lines project page and its document links.
+- `assets/space.css`: the shared star-field theme on all detail pages, including forms and code blocks.
+- `assets/reading.css`: reactive book icons and the About reading desk; edit the book text in `index.html`.
+- `assets/morph-graph.js`: the six-point diagram's animated layouts. Edges and the highlighted triangle stay fixed as the vertices move.
 - `assets/site.js`: navigation and progressively enhanced interactions.
 - `assets/hero-canvas.js`: canvas rendering, pointer/keyboard controls, scroll morphing, and animation lifecycle.
 - `assets/hero-field.js`: seeded K4/star/galaxy geometry and projection math.
@@ -48,6 +51,8 @@ The homepage starts with a slowly rotating tetrahedral K4 graph. Stars spread to
 Drag the hero horizontally to rotate it; vertical touch gestures still scroll. Keyboard users can focus the hero and use arrow keys to rotate, or Home to reset the view. The lower-right control pauses/resumes motion. Reduced-motion preferences start with a static scene, and hidden tabs stop requesting animation frames. Explicit scroll or rotation still updates a paused scene.
 
 Canvas resolution is capped at 2× and mobile uses fewer stars. The brightest points use cached glow sprites. Adjust particle count, rotation speed, and lighting in `hero-canvas.js`; shape geometry and scroll stages live in `hero-field.js`.
+
+Detail pages reuse the same renderer in a quiet reading mode without the opening K4 shape. The animation control also pauses the morphing six-point diagram. That diagram runs only while visible; reduced-motion users can choose static layouts with its Change shape button. Book icons open on hover/focus and reveal descriptions on click/tap, using native disclosure controls.
 
 ## Deployment
 

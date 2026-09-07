@@ -1,0 +1,44 @@
+/* Shared space setting for project, resource, and tutoring pages. */
+body.space-page {
+  --paper: #050a10;
+  --ink: #edf1f6;
+  --muted: #a7b2c2;
+  --blue: #b1c6ef;
+  --line: #ffffff24;
+  --scrollbar-track: #050a10;
+  background: #050a10;
+  color: var(--ink);
+  isolation: isolate;
+  min-height: 100vh;
+}
+.space-page .site-header { background: #050a10; border-color: var(--line); }
+.space-page .wordmark { color: var(--ink); }
+.space-page .detail-page { max-width: 960px; padding-top: 58px; }
+.space-page .detail-heading h1 { color: var(--ink); }
+.space-page .detail-lead { color: #c5cedb; }
+.space-page .prose p { color: #b8c4d4; }
+.space-page .prose ul { color: #b8c4d4; padding-left: 22px; line-height: 1.85; }
+.space-page .prose li { margin: 10px 0; }
+.space-page .prose h3 { font: 28px/1.2 var(--serif); margin: 32px 0 15px; }
+.space-page .prose .text-link { margin-top: 0; padding: 3px 0; gap: 12px; font-size: inherit; }
+.space-page .detail-meta .text-link { margin-top: 0; padding: 0; min-height: 0; }
+.space-page .text-link, .space-page .email-link { border-color: #ffffff45; }
+.space-page .availability { background: #101b2b85; padding: 18px 22px; color: #b7c4d6; }
+.space-page pre { background: #0c1622; border: 1px solid var(--line); padding: 24px; overflow-x: auto; font: 13px/1.8 var(--mono); }
+.space-page .curriculum > details[open] { background: #111c2955; }
+.space-page .curriculum > details > summary { padding-left: 12px; padding-right: 12px; }
+.space-page .topic-list { padding-left: 24px; padding-right: 24px; }
+.space-page .topic-list summary:hover, .space-page .curriculum > details > summary:hover { color: var(--blue); }
+.space-page .inquiry-form input, .space-page .inquiry-form textarea { background: #0e1926; border-color: #718199; color: var(--ink); }
+.space-page .inquiry-form input::placeholder, .space-page .inquiry-form textarea::placeholder { color: #98a8be; }
+.space-page .submit-button { color: #0a1422; background: #c4d5f1; border-color: #c4d5f1; }
+.space-page .submit-button:hover { background: #e0eafb; }
+.space-page .site-footer { width: calc(100% - 80px); max-width: 1100px; padding-bottom: 42px; gap: 24px; }
+.space-page .site-footer > a:last-child { margin-right: 46px; }
+@media(max-width: 700px) {
+  .space-page .detail-page { padding-top: 36px; }
+  .space-page .detail-heading h1 { font-size: clamp(46px, 12vw, 64px); }
+  .space-page .prose p { font-size: 16px; }
+  .space-page .site-footer { width: calc(100% - 40px); }
+  .space-page pre { padding: 16px; font-size: 12px; }
+}
