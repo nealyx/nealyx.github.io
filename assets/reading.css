@@ -55,3 +55,5 @@
   .practice-icon { width: 38px; font-size: 21px; }
 }
 @media(prefers-reduced-motion:reduce) { .book-icon,.book-cover { transform: none!important; transition: none; } }
+
+.practice-link + .practice-link { margin-top: -28px; border-top: 0; }
