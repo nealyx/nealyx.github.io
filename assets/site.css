@@ -172,7 +172,14 @@ nav a[aria-current]:after {
   display:grid;
   grid-template-columns:1.1fr 1fr;
   column-gap:5%;
-  padding-top:84px
+  padding-top:84px;
+  min-height:100svh;
+  position:relative;
+  overflow:hidden;
+  max-width:100% !important;
+  margin:0 !important;
+  padding-left:5.55%;
+  padding-right:5.55%
 }
 
 .blue-dot {
@@ -1794,4 +1801,30 @@ details[open]>summary .expand {
 .social-links--icons a:hover {
   opacity: 1;
   color: var(--blue);
+}
+
+/* ── Scroll-reveal for sections ────────────────────────────────────── */
+.section,
+.work-section,
+.problems-section,
+.milestones-section,
+.notes-section,
+.teaching-section,
+.about-section,
+.contact-section {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+              transform 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.section.in-view,
+.work-section.in-view,
+.problems-section.in-view,
+.milestones-section.in-view,
+.notes-section.in-view,
+.teaching-section.in-view,
+.about-section.in-view,
+.contact-section.in-view {
+  opacity: 1;
+  transform: none;
 }
