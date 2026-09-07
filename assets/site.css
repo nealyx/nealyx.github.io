@@ -1777,3 +1777,21 @@ details[open]>summary .expand {
 ::-webkit-scrollbar-thumb:hover {
   background: #243a66;
 }
+
+/* ── Icon-only social links ── */
+.social-links--icons {
+  align-items: center;
+}
+
+.social-links--icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.social-links--icons a:hover {
+  opacity: 1;
+  color: var(--blue);
+}
