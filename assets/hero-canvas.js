@@ -252,27 +252,27 @@
       var dy = rPy - mouseY;
       var distSq = dx*dx + dy*dy;
       
-      // SMALL, CONTROLLED HOVER SPAN (Radius = 70px)
-      var hoverRadius = 70;
+      // ULTRA-SMALL, THICK HOVER SPAN
+      var hoverRadius = 35; // Tiny radius
       
       if (distSq < hoverRadius*hoverRadius) {
         var dist = Math.sqrt(distSq);
         var force = (hoverRadius - dist) / hoverRadius;
         
-        // Pushes sharply but not too far
-        p.jVel[0] += (dx / dist) * force * 0.05;
-        p.jVel[1] += (dy / dist) * force * 0.05;
-        p.jVel[2] += (Math.random() - 0.5) * force * 0.02; 
+        // Micro-push to keep the span small and dense
+        p.jVel[0] += (dx / dist) * force * 0.015;
+        p.jVel[1] += (dy / dist) * force * 0.015;
+        p.jVel[2] += (Math.random() - 0.5) * force * 0.005; 
       }
       
-      // Thick, high-quality spring physics (Stiffer and heavier damping)
-      p.jVel[0] += -p.jOff[0] * 0.20; // High stiffness
-      p.jVel[1] += -p.jOff[1] * 0.20;
-      p.jVel[2] += -p.jOff[2] * 0.20;
+      // Extremely stiff, highly controlled spring physics
+      p.jVel[0] += -p.jOff[0] * 0.40; // Very high stiffness
+      p.jVel[1] += -p.jOff[1] * 0.40;
+      p.jVel[2] += -p.jOff[2] * 0.40;
       
-      p.jVel[0] *= 0.65; // Heavy friction (thick jelly)
-      p.jVel[1] *= 0.65;
-      p.jVel[2] *= 0.65;
+      p.jVel[0] *= 0.50; // Heavy damping, snaps back immediately, zero wobble
+      p.jVel[1] *= 0.50;
+      p.jVel[2] *= 0.50;
       
       p.jOff[0] += p.jVel[0];
       p.jOff[1] += p.jVel[1];
