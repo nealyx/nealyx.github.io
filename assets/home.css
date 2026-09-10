@@ -59,8 +59,6 @@
   transition: border-color .25s, background-color .25s;
 }
 .dark-space-theme .visual-0 {
-  background-image: radial-gradient(#ffffff20 .65px, transparent .65px);
-  background-size: 18px 18px;
 }
 .dark-space-theme .visual-1 { background-image: none; }
 .dark-space-theme .visual-1 .axis { stroke: #637087; }
