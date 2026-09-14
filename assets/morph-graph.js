@@ -23,8 +23,7 @@ function animate(figure) {
   const button = document.createElement('button');
   button.type = 'button'; button.className = 'change-shape';
   button.textContent = 'Change shape ↗'; figure.append(button);
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let paused = reduced.matches || document.documentElement.dataset.motionPaused === 'true';
+  let paused = document.documentElement.dataset.motionPaused === 'true';
   let visible = false, frame = 0, last = 0, elapsed = 0, next = 1;
   let from = layouts[0], to = layouts[1], current = layouts[0];
   function render(points) {
@@ -43,11 +42,10 @@ function animate(figure) {
   }
   button.addEventListener('click', () => {
     from = current; next = (next + 1) % layouts.length; to = layouts[next]; elapsed = 1600; last = 0;
-    if (paused || reduced.matches) { current = to; from = to; render(current); }
+    if (paused) { current = to; from = to; render(current); }
     else wake();
   });
   document.addEventListener('site-motion-change', e => { paused = e.detail.paused; last = 0; wake(); });
-  reduced.addEventListener('change', () => { paused = reduced.matches; last = 0; wake(); });
   document.addEventListener('visibilitychange', () => { last = 0; wake(); });
   new IntersectionObserver(entries => {
     visible = entries.some(e => e.isIntersecting); last = 0;

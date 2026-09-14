@@ -48,11 +48,11 @@ The Ramsey Lines page documents Neal's authorship of Chapters 8 and 10 and contr
 
 The homepage starts with a slowly rotating tetrahedral K4 graph. Stars spread toward the margins as the hero leaves the viewport, then gather into a spiral galaxy near the end of the page. Colors and particle positions are seeded, so resizes don't reshuffle them. Projection rejects points at the camera plane, and rendered star radii are bounded.
 
-Drag the hero horizontally to rotate it; vertical touch gestures still scroll. Keyboard users can focus the hero and use arrow keys to rotate, or Home to reset the view. The lower-right control pauses/resumes motion. Reduced-motion preferences start with a static scene, and hidden tabs stop requesting animation frames. Explicit scroll or rotation still updates a paused scene.
+Drag the hero horizontally to rotate it; vertical touch gestures still scroll. Keyboard users can focus the hero and use arrow keys to rotate, or Home to reset the view. The lower-right control pauses/resumes motion. Ambient motion starts playing on every platform, including when Windows reports reduced motion. Reduced motion still skips the entrance effect and disables decorative CSS transitions; the site control explicitly pauses/resumes ambient motion. Hidden tabs stop requesting animation frames. Explicit scroll or rotation still updates a paused scene.
 
 Canvas resolution is capped at 2× and mobile uses fewer stars. The brightest points use cached glow sprites. Adjust particle count, rotation speed, and lighting in `hero-canvas.js`; shape geometry and scroll stages live in `hero-field.js`.
 
-Detail pages reuse the same renderer in a quiet reading mode without the opening K4 shape. The animation control also pauses the morphing six-point diagram. That diagram runs only while visible; reduced-motion users can choose static layouts with its Change shape button. Book icons open on hover/focus and reveal descriptions on click/tap, using native disclosure controls.
+Detail pages reuse the same renderer in a quiet reading mode without the opening K4 shape. The animation control also pauses the morphing six-point diagram. That diagram runs only while visible; while paused, its Change shape button chooses a static layout. Book icons open on hover/focus and reveal descriptions on click/tap, using native disclosure controls.
 
 ## Deployment
 

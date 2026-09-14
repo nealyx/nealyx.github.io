@@ -1754,7 +1754,8 @@ details[open]>summary .expand {
 /* ── Custom scrollbar ── */
 :root {
   --scrollbar-thumb: #1b2a4a;
-  --scrollbar-track: #e8e6de;
+  --scrollbar-track: #03070c;
+  color-scheme: dark;
 }
 
 /* Firefox + modern standard */
@@ -1769,7 +1770,8 @@ details[open]>summary .expand {
   height: 8px;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
   background: var(--scrollbar-track);
 }
 

@@ -20,7 +20,8 @@ function init(hero) {
   document.body.append(pause);
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let paused = reduced.matches;
+  // Start ambient motion consistently; only the site control pauses it.
+  let paused = false;
   let width, height, scale, centerY, heroHeight, maxScroll, backdrop, stars;
   let scroll = window.scrollY, targetScroll = scroll;
   let yaw = .45, dragYaw = 0, dragPitch = 0;
@@ -126,7 +127,6 @@ function init(hero) {
     last = 0; requestDraw();
   }
   pause.addEventListener('click', () => { paused = !paused; updatePause(); });
-  reduced.addEventListener('change', () => { paused = reduced.matches; updatePause(); });
   addEventListener('scroll', () => { targetScroll = window.scrollY; if (paused) requestDraw(); }, { passive: true });
   addEventListener('resize', resize, { passive: true });
   new ResizeObserver(() => { maxScroll = Math.max(1, document.documentElement.scrollHeight - height); }).observe(document.body);
