@@ -40,13 +40,13 @@ The `src/` directory retains data and assets from the earlier generated design f
 
 To add a page or note, create its HTML file (for example `notes/your-note/index.html`), add its link to the homepage, and add its canonical URL to `sitemap.xml`. The build copies the `notes/` directory when present. Keep descriptions, canonical URLs, and sharing metadata accurate. Do not invent achievements or publication links.
 
-The homepage shows six populated sections: Work, Problems, Milestones, Teaching, About, and Contact. Writing & Notes is omitted until there is published writing to link to. Navigation across all pages points to Teaching in its place. Section content remains visible without JavaScript.
+The homepage shows six populated sections: Work, Problems, Honors, Skills, About, and Contact. Writing & Notes is omitted until there is published writing to link to. Navigation across all pages points to Skills; the older #teaching fragment still works as an alias. Tutoring remains accessible from the physics question and its existing page. Section content remains visible without JavaScript.
 
 The Ramsey Lines page documents Neal's authorship of Chapters 8 and 10 and contributions to the Frankl–Wilson slides, as confirmed by Neal. The two source PDFs are preserved in `work/ramsey-theory/`; the bylines, dates, and scope come from those documents. The chapters present established mathematics and should not be described as new Ramsey bounds or a peer-reviewed publication. Replace the PDFs and version details together when updating the work.
 
 ## Animated background
 
-The homepage starts with a slowly rotating tetrahedral K4 graph. Stars spread toward the margins as the hero leaves the viewport, then gather into a spiral galaxy near the end of the page. Colors and particle positions are seeded, so resizes don't reshuffle them. Projection rejects points at the camera plane, and rendered star radii are bounded.
+The homepage starts with a slowly rotating tetrahedral K4 graph, a short introduction, and an Explore my work link. Stars spread toward the margins as the hero leaves the viewport, then gather into a spiral galaxy near the end of the page. Colors and particle positions are seeded, so resizes don't reshuffle them. Projection rejects points at the camera plane, and rendered star radii are bounded.
 
 Drag the hero horizontally to rotate it; vertical touch gestures still scroll. Keyboard users can focus the hero and use arrow keys to rotate, or Home to reset the view. The lower-right control pauses/resumes motion. Ambient motion starts playing on every platform, including when Windows reports reduced motion. Reduced motion still skips the entrance effect and disables decorative CSS transitions; the site control explicitly pauses/resumes ambient motion. Hidden tabs stop requesting animation frames. Explicit scroll or rotation still updates a paused scene.
 

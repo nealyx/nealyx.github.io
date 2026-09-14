@@ -10,15 +10,15 @@
 .dark-space-theme p { color: #b8c1cd; }
 .dark-space-theme .eyebrow {
   color: #a1b0c5;
-  font-size: 10px;
-  letter-spacing: .12em;
+  font-size: 11px;
+  letter-spacing: .1em;
 }
 .dark-space-theme .section,
 .dark-space-theme .teaching-inner {
   width: calc(100% - 112px);
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: 104px 0;
+  padding: 88px 0;
   scroll-margin-top: 0;
 }
 .dark-space-theme .section + .section,
@@ -26,7 +26,7 @@
   border-top: 1px solid var(--line);
 }
 .dark-space-theme .section-heading {
-  margin-bottom: 48px;
+  margin-bottom: 38px;
   align-items: flex-end;
 }
 .dark-space-theme .section-heading h2,
@@ -69,8 +69,8 @@
 .dark-space-theme .work-link:hover .project-visual { border-color: #b1c6ef60; background-color: #101d2c; }
 .dark-space-theme .work-grid { gap: 28px; }
 .dark-space-theme .work-item h3 { font-size: 29px; line-height: 1.18; }
-.dark-space-theme .work-meta { color: #a2adbb; font-size: 10px; }
-.dark-space-theme .project-context { color: #96a2b3; }
+.dark-space-theme .work-meta { color: #aebacd; font-size: 11px; gap: 12px; }
+.dark-space-theme .project-context { color: #a4b1c3; font-size: 12px; }
 
 /* Questions form a single editorial list; native disclosures remain accessible. */
 .dark-space-theme .problems-section { background: transparent; color: var(--ink); }
@@ -152,7 +152,7 @@
 /* Teaching and about share a quiet two-column rhythm. */
 .dark-space-theme .teaching-section { border-bottom: 0; background: transparent; }
 .dark-space-theme .teaching-inner,
-.dark-space-theme .about-section { grid-template-columns: 1fr 1fr; gap: 96px; }
+.dark-space-theme .about-section { grid-template-columns: 1fr 1fr; gap: 64px; }
 .dark-space-theme .teaching-copy > p { max-width: none; font-size: 15px; line-height: 1.85; }
 .dark-space-theme .subject-list { margin-top: 32px; }
 .dark-space-theme .subject-list li { padding: 15px 0; font-size: 13px; }
@@ -235,4 +235,41 @@
   .dark-space-theme .site-footer { padding: 24px 0 32px; gap: 18px; }
   .dark-space-theme .site-footer > span { font-size: 10px; }
   .dark-space-theme .site-footer a:last-child { margin-right: 44px; }
+}
+
+/* A clear introduction, with the star field remaining the focal point. */
+.hero-caption { position: absolute; z-index: 11; bottom: 38px; left: 20px; right: 20px; text-align: center; }
+.dark-space-theme .hero-caption p { color: #b9c8dd; font: 14px/1.7 var(--sans); letter-spacing: .025em; }
+.hero-caption a { display: inline-flex; align-items: center; gap: 16px; padding: 12px 4px; margin-top: 6px; min-height: 44px; font: 11px/1.5 var(--mono); color: #d7e3f7; }
+.hero-caption a span { transition: transform .2s; }
+.hero-caption a:hover span { transform: translateY(3px); }
+.dark-space-theme .section { scroll-margin-top: 60px; }
+.skills-section { position: relative; scroll-margin-top: 60px; }
+.section-anchor { position: absolute; top: 0; scroll-margin-top: 60px; }
+.dark-space-theme .skills-intro { margin-top: 24px; max-width: 280px; font-size: 15px; }
+.skills-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.skill-group { border-top: 1px solid var(--line); padding-top: 20px; }
+.skill-group h3 { font: 25px/1.2 var(--serif); margin: 16px 0 12px; }
+.dark-space-theme .skill-group p { font-size: 13px; line-height: 1.9; color: #adbbcf; }
+.dark-space-theme .work-link { display: block; height: 100%; }
+.dark-space-theme .work-link:focus-visible { outline: 1px solid var(--blue); outline-offset: 8px; }
+.dark-space-theme .work-meta { flex-wrap: wrap; }
+.dark-space-theme .work-item h3 span { transition: transform .2s; }
+.dark-space-theme .work-link:hover h3 span { transform: translate(3px, -3px); }
+.dark-space-theme .location { font-size: 11px; }
+@media(max-width: 700px) {
+  .dark-space-theme .hero-name { top: 67% !important; }
+  .hero-caption { bottom: 20px; left: 30px; right: 30px; }
+  .dark-space-theme .hero-caption p { font-size: 12px; max-width: 260px; margin: 0 auto; }
+  .hero-caption a { margin-top: 2px; }
+  .skills-grid { gap: 28px 20px; }
+  .skill-group h3 { font-size: 23px; }
+  .dark-space-theme .skill-group p { font-size: 12px; }
+  .dark-space-theme .work-meta { font-size: 11px; }
+}
+@media(max-height: 550px) and (max-width: 700px) {
+  .dark-space-theme .hero { min-height: 540px !important; }
+}
+@media(prefers-reduced-motion: reduce) {
+  .hero-caption a span, .dark-space-theme .work-item h3 span { transition: none; }
 }

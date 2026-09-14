@@ -10,7 +10,8 @@ test('every internal link, fragment, script, stylesheet and font resolves',async
   const html=await readFile(file,'utf8');
   for(const [,raw] of html.matchAll(/(?:href|src)="([^"]+)"/g)){
    if(/^(https?:|mailto:)/.test(raw))continue;
-   const [name,hash]=raw.split('#');
+   const [pathWithQuery,hash]=raw.split('#');
+   const name=pathWithQuery.split('?')[0];
    let target=name?new URL('.'+name,root):file;
    if((await stat(target)).isDirectory())target=new URL('index.html',target.href+'/');
    assert.ok((await stat(target)).isFile(),`${file.pathname}: ${raw}`);
@@ -26,6 +27,6 @@ test('pages have semantic and sharing metadata; content stays available without 
   const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length,`${file}: duplicate IDs`);
  }
  const home=await readFile(new URL('index.html',root),'utf8');
- for(const id of ['work','problems','milestones','teaching','about','contact'])assert.ok(home.includes(`id="${id}"`));
+ for(const id of ['work','problems','milestones','skills','about','contact'])assert.ok(home.includes(`id="${id}"`));
  assert.ok(home.includes('src="/assets/hero-canvas.js"'));
 });
