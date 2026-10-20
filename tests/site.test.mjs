@@ -5,7 +5,7 @@ import { runInNewContext } from 'node:vm';
 
 const root = new URL('../dist/', import.meta.url);
 const origin = 'https://nealyx.github.io/';
-const projectIds = ['math-reward', 'reviewops', 'multimodal', 'formalization'];
+const projectIds = ['math-reward', 'reviewops', 'formalization'];
 
 async function walk(directory, prefix = '') {
   const files = [];

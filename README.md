@@ -59,7 +59,7 @@ The build uses this explicit file list. Retired portfolio, work, tutoring,
 services, and About pages are not included. Their previous versions remain in
 Git history; this website change does not change the research repositories.
 
-Keep the existing project fragments (`#math-reward`, `#reviewops`, `#multimodal`,
+Keep the existing project fragments (`#math-reward`, `#reviewops`,
 and `#formalization`) usable for incoming links. `/research.html` remains a
 compatibility route; `/` is the canonical address. If JavaScript is unavailable,
 the compatibility page still provides a link to the homepage.
@@ -67,7 +67,7 @@ the compatibility page still provides a link to the homepage.
 Project descriptions should distinguish saved-output verification from rerunning
 models, synthetic demos from participant results, and proposed research from
 completed experiments. Preserve the links to the math worked example, ReviewOps
-walkthrough and release, multimodal offline walkthrough, and formalization design.
+walkthrough and release, and formalization design.
 Do not imply adoption or scientific validation that the repositories do not show.
 
 ## Deployment
