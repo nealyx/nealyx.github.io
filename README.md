@@ -19,8 +19,7 @@ saved-output studies, runnable demos, and proposed work:
 | Project | What a reader can inspect | Scope |
 |---|---|---|
 | [Math Reward Hacking](https://github.com/nealyx/math-reward-hacking) | Saved completions, scoring rules, analyses, offline verification | Measurement diagnostic; no consistent reward-hacking conclusion |
-| [EGRA / FACED](https://github.com/nealyx/egra-faced) | Representation probes, controls, saved predictions and numeric verification | Exploratory audit of released representations |
-| [ReviewOps](https://github.com/nealyx/reviewops) | Local review queue, retained evidence, decisions, and a public EGRA audit walkthrough | Prototype; synthetic startup cases and an explicitly sourced public audit, with researcher pilot pending |
+| [ReviewOps](https://github.com/nealyx/reviewops) | Local review queue, retained evidence, and decisions | Prototype; synthetic startup cases, with researcher pilot pending |
 | [Multimodal Response Lab](https://github.com/nealyx/multimodal-response-lab) | Offline synthetic signal-to-report walkthrough | Heuristic proxies, not validated cognitive measurements |
 | [Formalization Evaluation Robustness](https://github.com/nealyx/formalization-eval-robustness) | Research question, controls and proposed artifact structure | Documentation scaffold; no public implementation or results |
 

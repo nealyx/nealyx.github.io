@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Public research &amp; tools — Neal Shandilya</title>
-  <meta name="description" content="Inspect public work on evaluation measurement, EEG representations, multimodal signal pipelines, and research review workflows. Evidence, runnable demos, and limits for each project.">
+  <meta name="description" content="Inspect public work on evaluation measurement, multimodal signal pipelines, and research review workflows. Evidence, runnable demos, and limits for each project.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://nealyx.github.io/research.html">
   <meta property="og:type" content="website">
@@ -37,7 +37,6 @@
     <p class="research-intro">Start with a saved-output walkthrough, explore a synthetic demo, or inspect the research design. Each repository makes its evidence and limitations explicit.</p>
     <nav class="research-contents" aria-label="Projects on this page">
       <a href="#math-reward">Evaluation diagnostics</a>
-      <a href="#eeg">EEG representations</a>
       <a href="#reviewops">Research review</a>
       <a href="#multimodal">Signal pipelines</a>
       <a href="#formalization">Formalization design</a>
@@ -58,39 +57,23 @@
       </div>
     </section>
 
-    <section class="research-project" id="eeg" aria-labelledby="eeg-title">
-      <div class="project-heading">
-        <p class="eyebrow">02 / Representation audit</p>
-        <span class="research-status">Exploratory analysis</span>
-      </div>
-      <h2 id="eeg-title">EGRA / FACED</h2>
-      <p class="project-question">Does an EEG representation retain the stimulus, the person, or their individual response?</p>
-      <p>An audit of released FACED/CLISA representations uses held-out subjects, comparison models, and saved predictions to separate stimulus recognition from individual residual-rating prediction. A dependency-free verifier checks the committed numeric summaries.</p>
-      <p class="project-limit"><strong>What the evidence supports:</strong> these tested representations and probes retain different kinds of information. The findings do not establish that EEG lacks emotion-related information or invalidate the original classification task.</p>
-      <div class="research-links">
-        <a class="text-link" href="https://github.com/nealyx/egra-faced/blob/main/docs/methods.md">Methods &amp; controls <span aria-hidden="true">↗</span></a>
-        <a class="text-link" href="https://github.com/nealyx/egra-faced">Code &amp; saved evidence <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
     <section class="research-project" id="reviewops" aria-labelledby="reviewops-title">
       <div class="project-heading">
-        <p class="eyebrow">03 / Research workflow</p>
+        <p class="eyebrow">02 / Research workflow</p>
         <span class="research-status">Local prototype</span>
       </div>
       <h2 id="reviewops-title">ReviewOps</h2>
       <p class="project-question">What needs review, what evidence is missing, and who made the decision?</p>
-      <p>A local workspace brings an experiment queue, reviewer assignments, artifact checks, retained evidence revisions, and explicit decisions into one workflow. Synthetic cases show missing or changed evidence; a separate public EGRA audit demonstrates a traceable research handoff.</p>
-      <p class="project-limit"><strong>Evidence scope:</strong> startup cases are synthetic. The public audit records an actual saved-output verification and remains awaiting human review. File integrity does not establish scientific correctness; researcher adoption and time savings have not been measured.</p>
+      <p>A local workspace brings an experiment queue, reviewer assignments, artifact checks, retained evidence revisions, and explicit decisions into one workflow. Synthetic cases show missing or changed evidence.</p>
+      <p class="project-limit"><strong>Evidence scope:</strong> startup cases are synthetic. File integrity does not establish scientific correctness; researcher adoption and time savings have not been measured.</p>
       <div class="research-links">
         <a class="text-link" href="https://github.com/nealyx/reviewops">Run the local demo <span aria-hidden="true">↗</span></a>
-        <a class="text-link" href="https://github.com/nealyx/reviewops/blob/main/docs/public-audit-walkthrough.md">Follow a public audit <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
     <section class="research-project" id="multimodal" aria-labelledby="multimodal-title">
       <div class="project-heading">
-        <p class="eyebrow">04 / Signal processing</p>
+        <p class="eyebrow">03 / Signal processing</p>
         <span class="research-status">Runnable pipeline</span>
       </div>
       <h2 id="multimodal-title">Multimodal Response Lab</h2>
@@ -104,7 +87,7 @@
 
     <section class="research-project" id="formalization" aria-labelledby="formalization-title">
       <div class="project-heading">
-        <p class="eyebrow">05 / Research design</p>
+        <p class="eyebrow">04 / Research design</p>
         <span class="research-status status-planned">Documentation scaffold</span>
       </div>
       <h2 id="formalization-title">Formalization Evaluation Robustness</h2>
