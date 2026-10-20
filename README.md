@@ -4,9 +4,10 @@ Static portfolio source for the `nealyx.github.io` account site.
 
 Plain HTML, CSS, and native JavaScript. No client framework or runtime dependencies.
 
-**Hosting status, checked October 20, 2026:** `https://nealyx.github.io/`
-returns HTTP 404. The last recorded successful GitHub Pages deployment is
-September 18, 2026; that historical status does not establish current availability.
+**Hosting status, checked October 20, 2026:** the
+[homepage](https://nealyx.github.io/) and
+[public research index](https://nealyx.github.io/research.html) are live.
+Both returned HTTP 200 and matched the published source during this check.
 The separate `nealyx.dev` site has its own hosting and access controls. This
 repository update does not change that site. See [Deployment](#deployment).
 
@@ -89,12 +90,13 @@ Detail pages reuse the same renderer in a quiet reading mode without the opening
 
 ## Deployment
 
-The repository is structured for GitHub Pages branch publishing from
-**main / (root)**, with `.nojekyll` for the existing static layout. However,
-current Pages settings could not be confirmed: the Pages configuration API
-returned 404, and the public URL also returned 404 on October 20, 2026.
-Pushing source is therefore not proof of a successful live deployment. Check
-the repository's Pages settings and deployment result before announcing it as live.
+GitHub Pages publishes **main / (root)**, with `.nojekyll` for the existing
+static layout. The Pages configuration and latest-build APIs confirmed a
+successful deployment of
+[`c40ac522`](https://github.com/nealyx/nealyx.github.io/commit/c40ac52287483ad1848fb43def3e1f30dd5610db),
+completed October 20, 2026 at 14:55:24 UTC. The deployed homepage and research
+index matched that commit's files byte for byte. For later changes, check the
+new build result and public pages before claiming the update is live.
 
 `dist/` is ignored by Git and remains available for the existing optional Sites
 publishing configuration. Do not change DNS, custom domains, or the independent
