@@ -8,6 +8,9 @@ status and reproduction instructions.
 The site uses plain HTML, one stylesheet, and system fonts. There are no external
 runtime dependencies, logo, favicon, animated background, or contact form. The
 research content is readable without JavaScript.
+Visible copy is lowercase. A small blinking cursor precedes the name and stays
+still when reduced motion is preferred. The footer contains location/language
+and score details supplied by Neal, followed by his public profile and email links.
 
 ## Preview and check
 

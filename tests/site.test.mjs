@@ -38,7 +38,7 @@ test('internal page links and assets resolve, including fragment targets', async
     for (const [, raw] of html.matchAll(/(?:href|src)\s*=\s*["']([^"']+)["']/g)) {
       if (raw === 'data:,') continue;
       const url = new URL(raw.replaceAll('&amp;', '&'), new URL(file, origin));
-      assert.ok(['http:', 'https:'].includes(url.protocol), `${file}: unexpected URL scheme ${raw}`);
+      assert.ok(['http:', 'https:', 'mailto:'].includes(url.protocol), `${file}: unexpected URL scheme ${raw}`);
       if (url.origin !== new URL(origin).origin) continue;
       let target = new URL('.' + url.pathname, root);
       if ((await stat(target)).isDirectory()) target = new URL('index.html', target.href.replace(/\/?$/, '/'));
@@ -67,14 +67,14 @@ test('homepage is a semantic, script-free research page with root sharing metada
   assert.equal(tags(html, 'link').find(link => link.rel === 'icon')?.href, 'data:,');
   const headings = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
   assert.equal(headings.length, 1);
-  assert.equal(headings[0][1].replace(/<[^>]*>/g, '').trim(), 'Neal Shandilya');
+  assert.equal(headings[0][1].replace(/<[^>]*>/g, '').trim(), 'neal shandilya');
   assert.equal(tags(html, 'main').length, 1);
   const ids = [...html.matchAll(/\bid\s*=\s*["']([^"']+)["']/g)].map(([, id]) => id);
   assert.equal(new Set(ids).size, ids.length, 'duplicate IDs');
   for (const id of projectIds) assert.ok(ids.includes(id), `missing project ${id}`);
   assert.match(html, /<a\b[^>]*href=["']https:\/\/github\.com\/nealyx["'][^>]*>\s*GitHub\s*<\/a>/i);
   assert.doesNotMatch(html, /<(?:script|nav|svg|canvas|form)\b/i);
-  assert.doesNotMatch(html, /(?:href=["']mailto:|\bid=["'](?:work|problems|milestones|skills|about|contact)["'])/i);
+  assert.doesNotMatch(html, /\bid=["'](?:work|problems|milestones|skills|about|contact)["']/i);
 });
 
 test('legacy research alias preserves project fragments and has a no-script fallback', async () => {
