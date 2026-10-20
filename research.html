@@ -3,108 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Public research &amp; tools — Neal Shandilya</title>
-  <meta name="description" content="Inspect public work on evaluation measurement, multimodal signal pipelines, and research review workflows. Evidence, runnable demos, and limits for each project.">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://nealyx.github.io/research.html">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Public research &amp; tools — Neal Shandilya">
-  <meta property="og:description" content="Experiments, inspectable evidence, and tools for research workflows. Explore what is implemented and what each result supports.">
-  <meta property="og:url" content="https://nealyx.github.io/research.html">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Public research &amp; tools — Neal Shandilya">
-  <meta name="twitter:description" content="Experiments, inspectable evidence, and tools for research workflows. Explore what is implemented and what each result supports.">
-  <meta name="theme-color" content="#050a10">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="/assets/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <title>Research — Neal Shandilya</title>
+  <meta name="description" content="Neal Shandilya's research and tools are now the homepage.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://nealyx.github.io/">
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/assets/site.css">
-  <link rel="stylesheet" href="/assets/space.css?v=a9535930">
-  <link rel="stylesheet" href="/assets/research-index.css">
-  <script type="module" src="/assets/site.js"></script>
-  <script type="module" src="/assets/hero-canvas.js"></script>
+  <script>window.location.replace('/' + window.location.hash);</script>
+  <meta http-equiv="refresh" content="0;url=/">
 </head>
-<body id="top" class="space-page research-index">
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="wordmark" href="/" aria-label="Neal Shandilya, home"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="4" x2="5" y2="18" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="12" y1="4" x2="19" y2="18" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="12" y1="4" x2="12" y2="13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="5" y1="18" x2="19" y2="18" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="5" y1="18" x2="12" y2="13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="12" y1="13" x2="19" y2="18" stroke="#a95738" stroke-width="1.3" stroke-linecap="round"/><circle cx="12" cy="4" r="1.8" fill="currentColor"/><circle cx="5" cy="18" r="1.8" fill="currentColor"/><circle cx="19" cy="18" r="1.8" fill="currentColor"/><circle cx="12" cy="13" r="1.8" fill="currentColor"/></svg>Neal Shandilya<span class="wordmark-period">.</span></a><nav aria-label="Main navigation"><a href="/#work">Work</a><a href="/research.html" aria-current="page">Research</a><a href="/#skills">Skills</a><a href="/#about">About</a><a class="nav-contact" href="/#contact">Get in touch <span aria-hidden="true">↗</span></a></nav></header>
-<main id="main">
-  <article class="detail-page">
-    <a class="back-link" href="/#work">← Back to selected work</a>
-    <header class="detail-heading">
-      <p class="eyebrow">Public research &amp; tools</p>
-      <h1>Work you can inspect.</h1>
-      <p class="detail-lead">What does a score actually measure? What evidence makes a result worth trusting? These projects approach those questions through experiments and tools.</p>
-    </header>
-    <p class="research-intro">Start with a saved-output walkthrough, explore a synthetic demo, or inspect the research design. Each repository makes its evidence and limitations explicit.</p>
-    <nav class="research-contents" aria-label="Projects on this page">
-      <a href="#math-reward">Evaluation diagnostics</a>
-      <a href="#reviewops">Research review</a>
-      <a href="#multimodal">Signal pipelines</a>
-      <a href="#formalization">Formalization design</a>
-    </nav>
-
-    <section class="research-project" id="math-reward" aria-labelledby="math-title">
-      <div class="project-heading">
-        <p class="eyebrow">01 / Evaluation measurement</p>
-        <span class="research-status">Saved-output case study</span>
-      </div>
-      <h2 id="math-title">Math Reward Hacking</h2>
-      <p class="project-question">When a reward improves, did the answer improve?</p>
-      <p>A paired arithmetic-training study and a later diagnostic examine how completion limits and answer extraction change apparent performance. The public package includes saved responses, scoring rules, analyses, and an offline verifier.</p>
-      <p class="project-limit"><strong>What the evidence supports:</strong> measurement choices materially affect the comparison. It does not establish consistent reward hacking; three training-seed pairs limit generalization, and weights are not distributed.</p>
-      <div class="research-links">
-        <a class="text-link" href="https://github.com/nealyx/math-reward-hacking/blob/main/docs/walkthrough.md">Read a worked example <span aria-hidden="true">↗</span></a>
-        <a class="text-link" href="https://github.com/nealyx/math-reward-hacking">Code &amp; saved evidence <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
-    <section class="research-project" id="reviewops" aria-labelledby="reviewops-title">
-      <div class="project-heading">
-        <p class="eyebrow">02 / Research workflow</p>
-        <span class="research-status">Local prototype</span>
-      </div>
-      <h2 id="reviewops-title">ReviewOps</h2>
-      <p class="project-question">What needs review, what evidence is missing, and who made the decision?</p>
-      <p>A local workspace brings an experiment queue, reviewer assignments, evidence checks, and explicit decisions into one workflow. Compare successive submissions, keep review drafts while switching experiments, and back up the complete workspace for later restore. Synthetic cases show missing or changed evidence.</p>
-      <p class="project-limit"><strong>Evidence scope:</strong> startup cases are synthetic. File integrity does not establish scientific correctness; researcher adoption and time savings have not been measured.</p>
-      <div class="research-links">
-        <a class="text-link" href="https://github.com/nealyx/reviewops/releases/latest">Download the local app <span aria-hidden="true">↗</span></a>
-        <a class="text-link" href="https://github.com/nealyx/reviewops">Code &amp; five-minute walkthrough <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
-    <section class="research-project" id="multimodal" aria-labelledby="multimodal-title">
-      <div class="project-heading">
-        <p class="eyebrow">03 / Signal processing</p>
-        <span class="research-status">Runnable pipeline</span>
-      </div>
-      <h2 id="multimodal-title">Multimodal Response Lab</h2>
-      <p class="project-question">Can a signal pipeline stay inspectable when its inputs become unreliable?</p>
-      <p>A local pipeline combines face, gaze, and head-pose proxies with event timing and response records. The offline synthetic walkthrough exercises scoring, quality tracking, export, and reporting without a camera or model download.</p>
-      <p class="project-limit"><strong>Measurement scope:</strong> heuristic scores and sensor quality remain separate. The proxies are not validated measures of attention, emotion, or cognition; synthetic output demonstrates software behavior, not human performance.</p>
-      <div class="research-links">
-        <a class="text-link" href="https://github.com/nealyx/multimodal-response-lab">Run the offline walkthrough <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
-    <section class="research-project" id="formalization" aria-labelledby="formalization-title">
-      <div class="project-heading">
-        <p class="eyebrow">04 / Research design</p>
-        <span class="research-status status-planned">Documentation scaffold</span>
-      </div>
-      <h2 id="formalization-title">Formalization Evaluation Robustness</h2>
-      <p class="project-question">Does an evaluator's verdict change when a statement's presentation changes but its meaning does not?</p>
-      <p>A proposed study separates meaning-preserving rewrites from faithfulness to the source statement. The public design includes unchanged-input controls and a plan for inspectable labels, exact inputs, evaluator outputs, and analysis.</p>
-      <p class="project-limit"><strong>Current public status:</strong> documentation only. No runnable evaluator, proof certificates, dataset, tests, or experimental results are released in this repository.</p>
-      <div class="research-links">
-        <a class="text-link" href="https://github.com/nealyx/formalization-eval-robustness">Read the research design <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-    <aside class="research-closing" aria-label="More work">
-      <p>For the mathematical exposition and earlier work behind these questions, see <a href="/work/ramsey-theory/">Ramsey Lines</a> and <a href="/#work">selected work</a>.</p>
-      <p class="research-date">Project descriptions reviewed October 20, 2026. Repository documentation is the source for current status.</p>
-    </aside>
-  </article>
-</main>
-<footer class="site-footer"><a href="/">nealyx</a><span>&copy; 2026 Neal Shandilya</span><a href="#top">Back to top ↑</a></footer>
+<body>
+  <main id="main" class="page message">
+    <h1>Research &amp; tools</h1>
+    <p>This page is now the homepage.</p>
+    <a href="/">Continue to research</a>
+  </main>
 </body>
 </html>
